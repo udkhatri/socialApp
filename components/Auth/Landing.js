@@ -8,10 +8,13 @@ const Landing = ({ navigation }) => {
       <View
         style={styles.logoContainer}
       >
+       
         <Image
-          source={require("../../assets/insta4.png")}
-          style={{ height: 100, width: 300 }}
+          source={require("../../assets/welcome.png")}
+          resizeMode="contain"
+          style={{ height: 250 }}
         />
+          <Text style={{ fontSize: 40 }}>Welcome</Text>
       </View>
       <Text style={styles.loginText}>
         Already have an account?

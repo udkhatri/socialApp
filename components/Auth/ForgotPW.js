@@ -3,7 +3,7 @@ import { StyleSheet, View, StatusBar, Image, Alert } from "react-native";
 import { Button, Text, TextInput, Snackbar } from "react-native-paper";
 import { auth } from "../../firebase";
 import styles from "./styles";
-
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 export default function Login({ navigation }) {
   const [Email, setEmail] = React.useState("");
   const [label, setLabel] = React.useState("");
@@ -33,9 +33,11 @@ export default function Login({ navigation }) {
   };
   return (
     <View style={{ backgroundColor: "#fff", flex: 1 }}>
-      <View style={styles.container}>
-        <Text style={{ fontSize: 40, marginBottom: 20 }}>Sign in</Text>
-
+          <KeyboardAwareScrollView
+      resetScrollToCoords={{ x: 30, y: 0 }}
+      contentContainerStyle={[styles.authContainer,{marginBottom:50}]}
+      scrollEnabled={true}
+    >
         <TextInput
           label="Email"
           value={Email}
@@ -53,7 +55,7 @@ export default function Login({ navigation }) {
         >
           Verify
         </Button>
-      </View>
+      </KeyboardAwareScrollView>
       <Snackbar
         visible={visible}
         onDismiss={onDismissSnackBar}

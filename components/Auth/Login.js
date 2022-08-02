@@ -2,6 +2,7 @@ import React from "react";
 import { View} from "react-native";
 import { Button, Text, TextInput, Banner } from "react-native-paper";
 import { auth } from "../../firebase";
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import styles from "./styles";
 export default function Login({ navigation }) {
   const [label, setLabel] = React.useState("");
@@ -52,7 +53,11 @@ export default function Login({ navigation }) {
       >
         <Text style={{ fontSize: 15, color: "#f00" }}>{label}</Text>
       </Banner>
-      <View style={styles.authContainer}>
+      <KeyboardAwareScrollView
+      resetScrollToCoords={{ x: 30, y: 0 }}
+      contentContainerStyle={styles.authContainer}
+      scrollEnabled={true}
+    >
 
         <TextInput
           label="Email"
@@ -102,7 +107,7 @@ export default function Login({ navigation }) {
         >
           Don't have account? Signup here
         </Button>
-      </View>
+      </KeyboardAwareScrollView>
     </View>
   );
 }
