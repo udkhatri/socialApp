@@ -1,6 +1,6 @@
 import React from "react";
 import { View} from "react-native";
-import { Button, Text, TextInput, Banner } from "react-native-paper";
+import { Button, Text, TextInput, Banner,Colors } from "react-native-paper";
 import { auth } from "../../firebase";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import styles from "./styles";
@@ -33,26 +33,7 @@ export default function Login({ navigation }) {
   };
   return (
     <View style={{ backgroundColor: "#fff", flex: 1 }}>
-      <Banner
-        visible={visible}
-        actions={[
-          {
-            label: "Ok",
-            onPress: () => setVisible(false),
-          },
-        ]}
-        contentStyle={{
-          backgroundColor: "#ecc",
-          borderRadius: 9,
-        }}
-        style={{
-          margin: 10,
-          borderRadius: 9,
-          marginBottom: 20,
-        }}
-      >
-        <Text style={{ fontSize: 15, color: "#f00" }}>{label}</Text>
-      </Banner>
+      
       <KeyboardAwareScrollView
       resetScrollToCoords={{ x: 30, y: 0 }}
       contentContainerStyle={styles.authContainer}
@@ -107,6 +88,26 @@ export default function Login({ navigation }) {
         >
           Don't have account? Signup here
         </Button>
+        <Banner
+        visible={visible}
+        actions={[
+          {
+            label: "Ok",
+            onPress: () => setVisible(false),
+          },
+        ]}
+        contentStyle={{
+          backgroundColor: Colors.red100,
+          borderRadius: 9,
+        }}
+        style={{
+          margin: 10,
+          borderRadius: 9,
+          marginBottom: 20,
+        }}
+      >
+        <Text style={{ fontSize: 15, color: "#000" }}>{label}</Text>
+      </Banner>
       </KeyboardAwareScrollView>
     </View>
   );

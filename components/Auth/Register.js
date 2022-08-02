@@ -1,12 +1,11 @@
 import React, { useEffect } from "react";
 import { StyleSheet, View, KeyboardAvoidingView, Image, Alert } from "react-native";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import { Button, Text, TextInput, Snackbar, Banner } from "react-native-paper";
+import { Button, Text, TextInput, Snackbar, Banner, Colors } from "react-native-paper";
 import { auth, db } from "../../firebase";
 import styles from "./styles";
 
 export default function Signup({ navigation }) {
-  const [num, setNum] = React.useState("");
   const [Name, setName] = React.useState("");
   const [securedpassword, setSecuredpassword] = React.useState(true);
   const [Email, setEmail] = React.useState("");
@@ -18,29 +17,35 @@ export default function Signup({ navigation }) {
   const [visible, setVisible] = React.useState(false);
 
   const onSignUp = () => {
-    console.log("signup");
-    auth
-      .createUserWithEmailAndPassword(Email, Password)
-      .then((result) => {
-        auth.currentUser.sendEmailVerification();
-        console.log("New user is: ",auth.currentUser.uid);
-        db.collection("users").doc(auth.currentUser.uid).set({
-          name: Name,
-          email: Email,
-          id: auth.currentUser.uid,
-          profilePicUrl: null,
-          userName: ""
-        }).then(()=>{
-          console.log("Document successfully written!");
-        }).catch((error)=>{
-          console.log("Error writing document: ",error);
+    if( Name == "" || Email == "" || Password == ""){
+      setLabel("Please fill all the fields");
+      setVisible(true);
+    }else{
+      console.log("signup");
+      auth
+        .createUserWithEmailAndPassword(Email, Password)
+        .then((result) => {
+          auth.currentUser.sendEmailVerification();
+          console.log("New user is: ",auth.currentUser.uid);
+          db.collection("users").doc(auth.currentUser.uid).set({
+            name: Name,
+            email: Email,
+            id: auth.currentUser.uid,
+            profilePicUrl: null,
+            userName: ""
+          }).then(()=>{
+            console.log("Document successfully written!");
+          }).catch((error)=>{
+            console.log("Error writing document: ",error);
+          })
         })
-      })
-      .catch((error) => {
-        console.log(error);
-        setLabel(error.message);
-        setVisible(true);
-      });
+        .catch((error) => {
+          console.log(error);
+          setLabel(error.message);
+          setVisible(true);
+        });
+    }
+    
   };
 
   const eyeColor = () => {
@@ -52,48 +57,19 @@ export default function Signup({ navigation }) {
   };
   return (
     <View style={{ backgroundColor: "#fff", flex: 1 }}>
-      <Banner
-        visible={visible}
-        actions={[
-          {
-            label: "Ok",
-            onPress: () => setVisible(false),
-          },
-        ]}
-        contentStyle={{
-          backgroundColor: "#ecc",
-          borderRadius: 9,
-        }}
-        style={{
-          margin: 10,
-          borderRadius: 9,
-          marginBottom: 20,
-        }}
-      >
-        <Text style={{ fontSize: 15, color: "#f00" }}>{label}</Text>
-      </Banner>
+    
       <KeyboardAwareScrollView
       resetScrollToCoords={{ x: 30, y: 0 }}
       contentContainerStyle={styles.authContainer}
       scrollEnabled={true}
     >
-        
+       
         <TextInput
           label="Name"
           value={Name}
           onChangeText={(text) => setName(text)}
           style={styles.input}
           mode="outlined"
-        />
-        <TextInput
-          label="Phone number"
-          mode="outlined"
-          type="number"
-          keyboardType="numeric"
-          maxLength={10}
-          value={num}
-          onChangeText={(text) => setNum(text)}
-          style={styles.input}
         />
 
         <TextInput
@@ -137,7 +113,26 @@ export default function Signup({ navigation }) {
         >
           already have an account? Login here
         </Button>
-      
+        <Banner
+        visible={visible}
+        actions={[
+          {
+            label: "Ok",
+            onPress: () => setVisible(false),
+          },
+        ]}
+        contentStyle={{
+          backgroundColor: Colors.red100,
+          borderRadius: 9,
+        }}
+        style={{
+          margin: 10,
+          borderRadius: 9,
+          marginBottom: 20,
+        }}
+      >
+        <Text style={{ fontSize: 15, color: "#000" }}>{label}</Text>
+      </Banner>
     </KeyboardAwareScrollView>
     
     </View>
