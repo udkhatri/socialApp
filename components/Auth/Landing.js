@@ -1,0 +1,40 @@
+import React from "react";
+import { View, Text, StyleSheet, Image } from "react-native";
+import { Button} from "react-native-paper";
+import styles from "./styles";
+const Landing = ({ navigation }) => {
+  return (
+    <View style={styles.container}>
+      <View
+        style={styles.logoContainer}
+      >
+        <Image
+          source={require("../../assets/insta4.png")}
+          style={{ height: 100, width: 300 }}
+        />
+      </View>
+      <Text style={styles.loginText}>
+        Already have an account?
+      </Text>
+      <Button
+        style={styles.button}
+        mode="contained"
+        onPress={() => navigation.navigate("Login")}
+      >
+        Log in
+      </Button>
+      <Text style={styles.loginText}>
+        Or
+      </Text>
+      <Button
+        style={styles.button}
+        mode="contained"
+        onPress={() => navigation.navigate("Sign Up")}
+      >
+        Sign up
+      </Button>
+    </View>
+  );
+};
+
+export default Landing;
