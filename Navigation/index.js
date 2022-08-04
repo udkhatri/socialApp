@@ -13,6 +13,7 @@ import ForgotPW from "../components/Auth/ForgotPW";
 
 import MainScreen from "../components/Main";
 import AddScreen from "../components/Main/Add";
+import SavePost from "../components/Main/Save";
 
 import { auth, db } from "../firebase";
 import { Text, View } from "react-native";
@@ -92,7 +93,11 @@ export default function NavigationStack({ navigation }) {
           component={AddScreen}
           navigation={navigation}
         />
-       
+         <Stack.Screen
+          name="SavePost"
+          component={SavePost}
+          navigation={navigation}
+          />
       </Stack.Navigator>
     </NavigationContainer>
   );
