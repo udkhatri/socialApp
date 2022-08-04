@@ -1,4 +1,4 @@
-import { StatusBar } from "expo-status-bar";
+
 import React, { useState, useEffect } from "react";
 
 //navigation
@@ -10,8 +10,51 @@ import Landing from "../components/Auth/Landing";
 import Login from "../components/Auth/Login";
 import Register from "../components/Auth/Register";
 import ForgotPW from "../components/Auth/ForgotPW";
+
+import MainScreen from "../components/Main";
+import AddScreen from "../components/Main/Add";
+
+import { auth, db } from "../firebase";
+import { Text, View } from "react-native";
+import { ActivityIndicator, Colors } from "react-native-paper";
+
 const Stack = createNativeStackNavigator();
-export default function NavigationStack() {
+
+export default function NavigationStack({ navigation }) {
+  const [loaded, setLoaded] = useState(false);
+  const [login, setLogin] = useState(false);
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      if (!user) {
+        setLogin(false);
+        console.log(user + " !user");
+        setLoaded(true);
+      }  
+        else {
+          setLoaded(true);
+          setLogin(true);
+        }
+    });
+  }, []);
+
+  if (!loaded) {
+    console.log("load: ",loaded);
+    return (
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <ActivityIndicator
+          animating={true}
+          color={Colors.blue400}
+          size="large"
+        />
+      </View>
+    );
+  } else if (!login) {
     return (
       <NavigationContainer>
         <Stack.Navigator>
@@ -23,7 +66,7 @@ export default function NavigationStack() {
             }}
           />
           <Stack.Screen options={{headerLargeTitle: true}} name="Login" component={Login} />
-          <Stack.Screen options={{headerLargeTitle: true}}  name="Sign Up" component={Register} />
+          <Stack.Screen options={{headerLargeTitle: true}}  name="Register" component={Register} />
           <Stack.Screen 
             name="ForgotPW"
             component={ForgotPW}
@@ -33,3 +76,24 @@ export default function NavigationStack() {
       </NavigationContainer>
     );
   }
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="main"
+          component={MainScreen}
+          options={{
+            headerShown: false,
+            headerTitle: "",
+          }}
+        />
+        <Stack.Screen
+          name="Add"
+          component={AddScreen}
+          navigation={navigation}
+        />
+       
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
