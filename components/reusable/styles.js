@@ -58,6 +58,23 @@ const dynamicStyles = () => {
         fontSize: 13,
         paddingLeft:5,
         fontWeight: "bold",
+    },
+    container:{
+        flex:1,
+        paddingTop:30,
+        alignItems: "center",
+    },
+    pageTitle:{
+        fontSize: 30,
+        fontWeight: "bold",
+        marginBottom: 50,
+
+    },
+    pageSubTitle:{
+        fontSize: 25,
+        color: "grey",
+        marginBottom: 10,
+
     }
   });
 };

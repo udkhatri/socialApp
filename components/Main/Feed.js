@@ -1,16 +1,17 @@
 import React from "react";
-import { View, Text,  } from "react-native";
+import { View, Text, Image } from "react-native";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import HomeScreen from "./HomeScreen";
+import UnderConstruction from "../reusable/UnderConstruction";
 const Tab = createMaterialTopTabNavigator();
 
-const ChatScreen = () => {
-  return <Text>Chat sreen</Text>;
+const Feed = ({navigation}) => {
+  const ChatScreen = () => {
+    return <UnderConstruction screenName="Direct Message" navigation={navigation} showHeader={true} backgroundColor="#F5FCFF"/>;
 };
 const StoryScreen = () => {
-  return <Text>Story sreen</Text>;
+return <UnderConstruction screenName="Upload Story" navigation={navigation} showHeader={true} backgroundColor="#fffafb"/>;
 };
-const Feed = () => {
   return (
     <View style={{ backgroundColor: "#fff", flex: 1 }}>
       {/* header complete */}

@@ -2,9 +2,26 @@ import React, { useEffect,useState } from "react";
 import { View, Text, Image, ImageBackground } from "react-native";
 import { Appbar} from "react-native-paper";
 import { Ionicons,Feather } from '@expo/vector-icons'; 
+import AllPosts from "./AllPosts";
+import {fetchAllPosts} from '../../components/UserFunctions'
 
 const HomeScreen = ({ navigation }) => {
 
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    fetchPosts();
+  }, []);
+
+  const fetchPosts = async () => {
+    setLoading(true);
+    await fetchAllPosts((posts) => {
+      console.log("post: ",posts);
+      setPosts(posts);
+      setLoading(false);
+    });
+   
+  }
   return (
     <ImageBackground
       source={require("../../assets/backface.jpg")}
@@ -21,7 +38,7 @@ const HomeScreen = ({ navigation }) => {
         >
           <Appbar.Action
             icon={()=>{ return <Feather name="camera" size={24} color="black" />}}
-            onPress={() => console.log("press")}
+            onPress={() => navigation.navigate("StoryScreen")}
           />
           <Image
             source={require("../../assets/insta.png")}
@@ -29,9 +46,10 @@ const HomeScreen = ({ navigation }) => {
           />
           <Appbar.Action
             icon={() =>{ return <Ionicons name="ios-chatbox-ellipses-outline" size={24} color="black" />}}
-            onPress={() => console.log("press")}
+            onPress={() => navigation.navigate("ChatScreen")}
           />
         </Appbar.Header>
+        <AllPosts navigation={navigation} posts={posts} fetchPosts={fetchPosts} loading={loading}/>
         <Text>feed screen</Text>
       </View>
     </ImageBackground>
