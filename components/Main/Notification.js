@@ -1,12 +1,10 @@
 import React from "react";
 import { View, Text } from "react-native";
-import { Appbar } from "react-native-paper";
+import UnderConstruction from "../reusable/UnderConstruction";
 
-const Notification = () => {
+const Notification = ({navigation}) => {
   return (
-    <View>
-      <Text>notification</Text>
-    </View>
+   <UnderConstruction screenName="Notifications" navigation={navigation} backgroundColor="#fff4f2"/>
   );
 };
 

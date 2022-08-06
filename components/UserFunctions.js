@@ -39,7 +39,6 @@ export const fetchUserPosts = async (userId, callback) => {
           Posts.push(data);
         })
       ).then(() => {
-        console.log("Posts",Posts.length);
         callback(Posts);
       })
     });

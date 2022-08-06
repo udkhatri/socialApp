@@ -22,7 +22,7 @@ const UnderConstruction = (props) => {
     />
    
   </Appbar.Header>}
-    <View style={[styles.container,{backgroundColor: backgroundColor}]}>  
+    <View style={[styles.container,{backgroundColor: backgroundColor}, !showHeader && {paddingTop:130}]}>  
     <Text style={styles.pageTitle}>{screenName}</Text>
     <Image
              source={require("../../assets/wait.png")}

@@ -167,7 +167,9 @@ const Profile = ({ navigation }, props) => {
             </View>
             <Button
               mode="contained"
-              style={{ marginHorizontal: 10 }}
+              color="#84a59d"
+              labelStyle={{ color: "white" }}
+              style={{ marginHorizontal: 10 ,}}
               onPress={() => {
                 navigation.navigate("EditProfile", {
                   user: user,

@@ -1,5 +1,8 @@
 import { StyleSheet } from "react-native";
 import Constants from "expo-constants";
+import {
+  Colors,
+} from "react-native-paper";
 const styles = StyleSheet.create({
     container:{
         flex:1,
@@ -82,6 +85,30 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.2,
         shadowRadius: 3,
       },
+      searchBarStyle:{
+          padding: 0,
+          marginHorizontal: 10,
+          backgroundColor: "#f000",
+          borderBottomColor: "#f000",
+          borderTopColor: "#f000",
+        
+      },
+      searchBarInput:{
+        backgroundColor: Colors.grey200,
+        height: 40,
+        padding: 5,
+      },
+      userItem:{
+        margin:10,
+        borderBottomColor: Colors.grey400,
+        borderBottomWidth: 0.5,
+      },
+      pageSubTitle:{
+        fontSize: 25,
+        color: Colors.grey600,
+        fontWeight: '600',
+        marginBottom: 10,
+    }
 })
 
 export default styles;

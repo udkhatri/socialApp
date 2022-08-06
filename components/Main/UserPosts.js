@@ -17,6 +17,7 @@ const UserPosts = (props) => {
           <PostCard
             url={item.downloadURL}
             index={index}
+            userId={item.userId}
             caption={item.caption}
             userName={item.postBy?.name}
             userProfilePic={item.postBy?.profilePicUrl}

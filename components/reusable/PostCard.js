@@ -13,6 +13,7 @@ import {
 import { Image } from "react-native-elements";
 import { Feather } from "@expo/vector-icons";
 import {toDateTime} from './reusableComponets'
+import { db, auth, fs} from "../../firebase";
 import dynamicStyles from "./styles";
 
 const PostCard = (props) => {
@@ -22,14 +23,15 @@ const PostCard = (props) => {
     userName,
     userProfilePic,
     date,
+    userId,
     likes,
   } = props;
+  console.log("userId: ",userId);
   const styles = dynamicStyles();
   return (
     <Card
       style={[styles.cardContainer, styles.elevation]}
     >
-    
       <Card.Title
         style={styles.cardTitle}
         titleStyle={styles.cardTitleText}
@@ -38,11 +40,11 @@ const PostCard = (props) => {
           <Avatar.Image
             size={44}
             style={styles.elevation}
-            source={userProfilePic ? {uri: userProfilePic} : require("../../assets/favicon.png")}
+            source={userProfilePic ? {uri: userProfilePic} : require("../../assets/defaultProfilePic.png")}
           />
         )}
         right={(props) => (
-          <IconButton {...props} icon="dots-vertical" onPress={() => {}} />
+          auth.currentUser.uid == userId && <IconButton {...props} icon="dots-vertical" onPress={() => {}} />
         )}
        
       />
@@ -78,7 +80,7 @@ const PostCard = (props) => {
             onPress={() => {}}
             style={[styles.cardActionButton, styles.elevation]}
           />
-          <IconButton
+         <IconButton
             {...props}
             icon={({ color }) => (
               <Feather name="send" size={22} color={color} />
@@ -86,6 +88,7 @@ const PostCard = (props) => {
             onPress={() => {}}
             style={[styles.cardActionButton, styles.elevation]}
           />
+          
         </View>
 
         <IconButton

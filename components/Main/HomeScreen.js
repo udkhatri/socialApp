@@ -16,7 +16,6 @@ const HomeScreen = ({ navigation }) => {
   const fetchPosts = async () => {
     setLoading(true);
     await fetchAllPosts((posts) => {
-      console.log("post: ",posts);
       setPosts(posts);
       setLoading(false);
     });
@@ -50,7 +49,6 @@ const HomeScreen = ({ navigation }) => {
           />
         </Appbar.Header>
         <AllPosts navigation={navigation} posts={posts} fetchPosts={fetchPosts} loading={loading}/>
-        <Text>feed screen</Text>
       </View>
     </ImageBackground>
   );
