@@ -15,6 +15,7 @@ import MainScreen from "../components/Main";
 import AddScreen from "../components/Main/Add";
 import SavePost from "../components/Main/Save";
 import UserPosts from "../components/Main/UserPosts";
+import EditProfile from "../components/Main/EditProfile";
 
 import { auth, db } from "../firebase";
 import { Text, View } from "react-native";
@@ -107,6 +108,15 @@ export default function NavigationStack({ navigation }) {
           }}
           component={UserPosts}
           navigation={navigation}
+        />
+         <Stack.Screen
+          name="EditProfile"
+          component={EditProfile}
+          navigation={navigation}
+          options={({ navigation, route }) => ({
+            headerTitle: "Edit Profile",
+            title: "Edit Profile",
+        })}
         />
       </Stack.Navigator>
     </NavigationContainer>

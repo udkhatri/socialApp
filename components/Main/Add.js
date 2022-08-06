@@ -28,7 +28,6 @@ export default function Add({ navigation }) {
   const takePicture = async () => {
     if (camera) {
       const data = await camera.takePictureAsync(null);
-      console.log(data.uri);
       setImage(data.uri);
     }
   };
@@ -39,7 +38,7 @@ export default function Add({ navigation }) {
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [3, 4],
-      quality: 0.5,
+      quality: 0.2,
     });
     if (!result.cancelled) {
       setImage(result.uri);
@@ -50,7 +49,7 @@ export default function Add({ navigation }) {
     let result = await ImagePicker.launchCameraAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       aspect: [3, 4],
-      quality: 0.5,
+      quality: 0.2,
     });
     console.log(result);
 

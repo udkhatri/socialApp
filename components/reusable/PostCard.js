@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useEffect, useState} from "react";
 import { View, Platform } from "react-native";
 import {
   Avatar,
@@ -14,6 +14,7 @@ import { Image } from "react-native-elements";
 import { Feather } from "@expo/vector-icons";
 import {toDateTime} from './reusableComponets'
 import { db, auth, fs} from "../../firebase";
+import {savePost,removeSavedPost} from '../UserFunctions'
 import dynamicStyles from "./styles";
 
 const PostCard = (props) => {
@@ -25,9 +26,23 @@ const PostCard = (props) => {
     date,
     userId,
     likes,
+    post,
+    user
   } = props;
   console.log("userId: ",userId);
   const styles = dynamicStyles();
+const [savedPost, setSavedPost] = useState(false)
+  useEffect(() => {
+    if (user.savedPost) {
+      if (user.savedPost.includes(post.id)) {
+        setSavedPost(true);
+      }
+      else{
+        setSavedPost(false);
+      }
+    }
+  }, []);
+
   return (
     <Card
       style={[styles.cardContainer, styles.elevation]}
@@ -93,8 +108,11 @@ const PostCard = (props) => {
 
         <IconButton
           {...props}
-          icon="bookmark-outline"
-          onPress={() => {}}
+          icon= {savedPost ? "bookmark" :"bookmark-outline"}
+          onPress={() => {
+            savedPost ? (removeSavedPost(post.id)):(savePost(post.id))
+            setSavedPost(!savedPost)
+            }}
           style={[styles.cardActionButton, styles.elevation]}
         />
       </Card.Actions>

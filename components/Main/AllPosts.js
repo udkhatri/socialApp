@@ -2,7 +2,7 @@ import React,{useEffect} from "react";
 import { View, Text, FlatList,RefreshControl } from "react-native";
 import PostCard from "../reusable/PostCard";
 const AllPosts = (props) => {
-  const { navigation, posts, fetchPosts , loading} = props;
+  const { navigation, posts, fetchPosts , loading, user} = props;
 
   return (
     <View>
@@ -15,12 +15,14 @@ const AllPosts = (props) => {
           <PostCard
             url={item.downloadURL}
             index={index}
+            post={item}
             userId={item.userId}
             caption={item.caption}
             userName={item.postBy?.name}
             userProfilePic={item.postBy?.profilePicUrl}
             date={item.creation.seconds}
             likes={item.likes}
+            user={user}
           />
         )}
         ListFooterComponent={() => (

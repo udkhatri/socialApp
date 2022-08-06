@@ -10,7 +10,7 @@ const dynamicStyles = () => {
     elevation:{
         elevation: 5,
         shadowOffset: {
-          width: 0,
+          width: 2,
           height:2,
         },
         shadowOpacity: 0.2,
@@ -72,10 +72,16 @@ const dynamicStyles = () => {
     },
     pageSubTitle:{
         fontSize: 25,
-        color: "grey",
+        fontWeight: "bold",
         marginBottom: 10,
-
-    }
+        color: "grey",
+    },
+    pageSubTitle2:{
+      fontSize: 20,
+      color: "grey",
+      textAlign: "center",
+      paddingHorizontal: 10,
+  }
   });
 };
 export default dynamicStyles;

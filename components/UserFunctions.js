@@ -1,7 +1,8 @@
 import { db, auth, fs} from "../firebase";
+import firebase from "firebase/app";
 
 export const fetchUser = (userId, callback) => {
-  const id = userId || auth.currentUser.uid;
+  const id = auth.currentUser.uid;
   db
     .collection("users")
     .doc(id)
@@ -14,6 +15,30 @@ export const fetchUser = (userId, callback) => {
     });
 };
 
+export const savePost = (postID) => {
+  const id = auth.currentUser.uid;
+  db
+  .collection("users")
+    .doc(id)
+    .update({
+      savedPost: firebase.firestore.FieldValue.arrayUnion(postID),
+    })
+    .catch((error) => {
+      console.log('error', error);
+    });
+};
+export const removeSavedPost = (postID) => {
+  const id = auth.currentUser.uid;
+  db
+  .collection("users")
+    .doc(id)
+    .update({
+      savedPost: firebase.firestore.FieldValue.arrayRemove(postID),
+    })
+    .catch((error) => {
+      console.log('error', error);
+    });
+};
 export const setUserData = async (userId, data) => {
   console.log("setUserData", userId, data);
   db

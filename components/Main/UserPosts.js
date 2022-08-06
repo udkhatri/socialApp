@@ -2,7 +2,7 @@ import React,{useEffect} from "react";
 import { View, Text, FlatList } from "react-native";
 import PostCard from "../reusable/PostCard";
 const UserPosts = (props) => {
-  const { navigation, post, index , loading} = props.route.params;
+  const { navigation, post, index , user} = props.route.params;
   useEffect(() => {
     console.log("post are: ",post);
   }, []);
@@ -17,12 +17,14 @@ const UserPosts = (props) => {
           <PostCard
             url={item.downloadURL}
             index={index}
+            post={item}
             userId={item.userId}
             caption={item.caption}
             userName={item.postBy?.name}
             userProfilePic={item.postBy?.profilePicUrl}
             date={item.creation.seconds}
             likes={item.likes}
+            user={user}
           />
         )}
         ListFooterComponent={() => (

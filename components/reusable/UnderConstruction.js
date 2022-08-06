@@ -29,7 +29,8 @@ const UnderConstruction = (props) => {
              resizeMode="contain"
              style={{ height: 350, width: 350 }}
            />
-    <Text style={styles.pageSubTitle}>Page under construction</Text>
+    <Text style={styles.pageSubTitle}>Sorry🙁</Text>
+    <Text style={styles.pageSubTitle2}>This page is under construction. We will bring this feature shortly</Text>
  </View>
  </>
   )
