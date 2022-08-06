@@ -14,6 +14,7 @@ import ForgotPW from "../components/Auth/ForgotPW";
 import MainScreen from "../components/Main";
 import AddScreen from "../components/Main/Add";
 import SavePost from "../components/Main/Save";
+import UserPosts from "../components/Main/UserPosts";
 
 import { auth, db } from "../firebase";
 import { Text, View } from "react-native";
@@ -98,6 +99,15 @@ export default function NavigationStack({ navigation }) {
           component={SavePost}
           navigation={navigation}
           />
+          <Stack.Screen
+          name="UserPosts"
+          options={{
+            headerTitle: "Posts",
+            title: "Posts",
+          }}
+          component={UserPosts}
+          navigation={navigation}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

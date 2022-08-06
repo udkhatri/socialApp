@@ -1,6 +1,7 @@
 import React, { useEffect,useState } from "react";
 import { View, Text, Image, ImageBackground } from "react-native";
 import { Appbar} from "react-native-paper";
+import { Ionicons,Feather } from '@expo/vector-icons'; 
 
 const HomeScreen = ({ navigation }) => {
 
@@ -19,7 +20,7 @@ const HomeScreen = ({ navigation }) => {
           }}
         >
           <Appbar.Action
-            icon="camera-outline"
+            icon={()=>{ return <Feather name="camera" size={24} color="black" />}}
             onPress={() => console.log("press")}
           />
           <Image
@@ -27,7 +28,7 @@ const HomeScreen = ({ navigation }) => {
             style={{ height: 39, width: 120 }}
           />
           <Appbar.Action
-            icon="message-text-outline"
+            icon={() =>{ return <Ionicons name="ios-chatbox-ellipses-outline" size={24} color="black" />}}
             onPress={() => console.log("press")}
           />
         </Appbar.Header>

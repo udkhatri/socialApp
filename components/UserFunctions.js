@@ -14,7 +14,13 @@ export const fetchUser = (userId, callback) => {
     });
 };
 
-
+export const setUserData = async (userId, data) => {
+  console.log("setUserData", userId, data);
+  db
+    .collection("users")
+    .doc(userId)
+    .update(data)
+}
 export const fetchUserPosts = async (userId, callback) => {
   console.log("fetching posts",userId);
   var Posts = [];

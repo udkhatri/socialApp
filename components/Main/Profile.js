@@ -18,7 +18,6 @@ import {
   Appbar,
   ActivityIndicator,
   IconButton,
-  DarkTheme,
   Caption,
 } from "react-native-paper";
 import { Text } from "react-native-elements";
@@ -82,7 +81,7 @@ const Profile = ({ navigation }, props) => {
     // <Text>{item.id} hello boys</Text>
     return <TouchableOpacity
       onPress={() => {
-       console.log("clicked")
+        navigation.navigate("UserPosts", { post, index, user });
       }}
     >
       <Image
@@ -168,12 +167,12 @@ const Profile = ({ navigation }, props) => {
             </View>
             <Button
               mode="contained"
-              style={{
-                marginHorizontal: 10,
-               
-                 }}
+              style={{ marginHorizontal: 10 }}
               onPress={() => {
-               console.log("pressed");
+                navigation.navigate("EditProfile", {
+                  user: user,
+                  navigation,
+                });
               }}
             >
               Edit profile
