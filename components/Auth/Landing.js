@@ -32,7 +32,7 @@ const Landing = ({ navigation }) => {
       <Button
         style={styles.button}
         mode="contained"
-        onPress={() => navigation.navigate("Sign Up")}
+        onPress={() => navigation.navigate("Signup")}
       >
         Sign up
       </Button>

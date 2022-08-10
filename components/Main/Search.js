@@ -68,11 +68,10 @@ const Search = (props) => {
           <TouchableOpacity
             style={[styles.userItem]}
             onPress={() => {
-                props.navigation.navigate("Profile", {
-                  uid: item.id,
-                  uname: item.name,
+              auth.currentUser.uid == item.id ? props.navigation.navigate("Profile") :
+              props.navigation.navigate("OtherProfile", {
+                  user: item,
                 });
-              
             }}
           >
             <Card.Title

@@ -23,65 +23,49 @@ import {
 import { Text } from "react-native-elements";
 
 import { auth, db, fs } from "../../firebase";
-import { fetchUser,fetchUserPosts } from "../../components/UserFunctions";
+import { fetchUserById,fetchUserPosts, fetchUser } from "../UserFunctions";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import styles from "./styles";
 
 const Tab = createMaterialTopTabNavigator();
 
-const Profile = ({ navigation }, props) => {
+const OtherProfile = (props) => {
+
+  const { user } = props.route.params;
+
   const width = useWindowDimensions().width;
   const [post, setpost] = useState([]);
-  const [user, setUser] = useState([]);
+  const [userData, setUserData] = useState([]);
   const [loading, setLoading] = useState(false);
-
+  const [currentUser, setCurrentUser] = useState([]);
   useEffect(() => {
-    fetchUser("", (user) => {
+    fetchUserById(user.id, (user) => {
       console.log("user: ", user);
-      setUser(user);
-      fetchPosts(user.id)
-    });
+      props.navigation.setOptions({ title: user?.name  })
+      setUserData(user)
+    })
+    fetchUser("",(user) => {
+      setCurrentUser(user)
+    })
+   
+    fetchPosts(user.id)
   }, []);
 
   const fetchPosts = (userId) =>{
     setLoading(true);
     fetchUserPosts(userId, (posts) => {
+      
       console.log("posts are: ",posts);
       setpost(posts);
       setLoading(false);
     })
   }
-  const onLogoutPress = () => {
-    Alert.alert("Log Out", "Are you sure?", [
-      {
-        text: "No",
-        onPress: () => console.log("Cancel Pressed"),
-        style: "cancel",
-      },
-      {
-        text: "Yes",
-        onPress: () => {
-          auth
-            .signOut()
-            .then(() => {
-              console.log("success");
-            })
-            .catch((err) => {
-              console.log(err);
-            });
-        },
-      },
-    ]);
-  };
-  const onLSettingPress = () => {
-    navigation.navigate("Settings");
-  }
   const renderItem = ({ item, index }) => {
     // <Text>{item.id} hello boys</Text>
     return <TouchableOpacity
       onPress={() => {
-        navigation.navigate("UserPosts", { post, index, user, savedPost: user.savedPost });
+        props.navigation.navigate("UserPosts", { post, index, userData , savedPost: currentUser?.savedPost});
       }}
     >
       <Image
@@ -130,25 +114,13 @@ const Profile = ({ navigation }, props) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* header */}
-
-      <Appbar.Header
-        style={{
-          backgroundColor: "transparent",
-          elevation: 0,
-          justifyContent: "space-between",
-        }}
-      >
-        <Appbar.Content title={user?.userName ? user?.userName : user?.name} />
-        <Appbar.Action icon="cog" onPress={onLSettingPress} />
-        <Appbar.Action icon="logout" onPress={onLogoutPress} />
-      </Appbar.Header>
+     
       <View style={styles.contentContainer}>
         <View style={styles.userRaw}>
           <Avatar.Image
             style={{ elevation: 10 }}
             size={100}
-            source={user?.profilePicUrl ? { uri: user?.profilePicUrl } : require("../../assets/defaultProfilePic.png")}
+            source={userData?.profilePicUrl ? { uri: userData?.profilePicUrl } : require("../../assets/defaultProfilePic.png")}
           />
           <View style={{ flex: 1 }}>
             <View style={styles.userDataContaienr}>
@@ -165,26 +137,13 @@ const Profile = ({ navigation }, props) => {
                 <Caption style={{ marginTop: -5 }}>Following</Caption>
               </View>
             </View>
-            <Button
-              mode="contained"
-              color="#84a59d"
-              labelStyle={{ color: "white" }}
-              style={{ marginHorizontal: 10 ,}}
-              onPress={() => {
-                navigation.navigate("EditProfile", {
-                  user: user,
-                  navigation,
-                });
-              }}
-            >
-              Edit profile
-            </Button>
+            
           </View>
         </View>
-        {user?.name && user?.name != "" && <Text style={styles.boldText}>{user?.name}</Text>}
-        {user?.bio && user?.bio != "" && <Caption style={styles.caption}>{user?.bio}</Caption>}
+        {userData?.name && userData?.name != "" && <Text style={styles.boldText}>{userData?.name}</Text>}
+        {userData?.bio && userData?.bio != "" && <Caption style={styles.caption}>{userData?.bio}</Caption>}
       </View>
-
+    
       <Tab.Navigator
         screenOptions={{
           tabBarActiveTintColor: "#84a59d",
@@ -206,18 +165,10 @@ const Profile = ({ navigation }, props) => {
           }}
           component={PostsScreen}
         />
-        <Tab.Screen
-          name="TaggedPosts"
-          options={{
-            tabBarIcon: ({ color, size }) => (
-              <MaterialIcons name="bookmark-border" size={24} color={color} />
-            ),
-          }}
-          component={PostsTaggedScreen}
-        />
+      
       </Tab.Navigator>
     </SafeAreaView>
   );
 };
 
-export default Profile;
+export default OtherProfile;

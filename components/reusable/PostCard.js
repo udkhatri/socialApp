@@ -14,7 +14,7 @@ import { Image } from "react-native-elements";
 import { Feather } from "@expo/vector-icons";
 import {toDateTime} from './reusableComponets'
 import { db, auth, fs} from "../../firebase";
-import {savePost,removeSavedPost} from '../UserFunctions'
+import {savePost,removeSavedPost,fetchUser} from '../UserFunctions'
 import dynamicStyles from "./styles";
 
 const PostCard = (props) => {
@@ -27,14 +27,15 @@ const PostCard = (props) => {
     userId,
     likes,
     post,
-    user
+    user,
+    savedPosts
   } = props;
   console.log("userId: ",userId);
   const styles = dynamicStyles();
 const [savedPost, setSavedPost] = useState(false)
   useEffect(() => {
-    if (user.savedPost) {
-      if (user.savedPost.includes(post.id)) {
+    if (savedPosts) {
+      if (savedPosts.includes(post.id)) {
         setSavedPost(true);
       }
       else{

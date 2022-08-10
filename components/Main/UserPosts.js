@@ -2,7 +2,7 @@ import React,{useEffect} from "react";
 import { View, Text, FlatList } from "react-native";
 import PostCard from "../reusable/PostCard";
 const UserPosts = (props) => {
-  const { navigation, post, index , user} = props.route.params;
+  const { navigation, post, index , user, savedPost} = props.route.params;
   useEffect(() => {
     console.log("post are: ",post);
   }, []);
@@ -25,6 +25,7 @@ const UserPosts = (props) => {
             date={item.creation.seconds}
             likes={item.likes}
             user={user}
+            savedPosts={savedPost}
           />
         )}
         ListFooterComponent={() => (

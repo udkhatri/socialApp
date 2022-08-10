@@ -14,6 +14,19 @@ export const fetchUser = (userId, callback) => {
       }
     });
 };
+export const fetchUserById = (userId, callback) => {
+  console.log("userId: ", userId);
+  db
+    .collection("users")
+    .doc(userId)
+    .onSnapshot((snapshot) => {
+      if (snapshot.exists) {
+        callback(snapshot.data());
+      } else {
+        console.log("errors: snapshot not exist");
+      }
+    });
+};
 
 export const savePost = (postID) => {
   const id = auth.currentUser.uid;

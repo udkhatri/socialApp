@@ -20,6 +20,7 @@ const AllPosts = (props) => {
             caption={item.caption}
             userName={item.postBy?.name}
             userProfilePic={item.postBy?.profilePicUrl}
+            savedPost={user?.savedPost}
             date={item.creation.seconds}
             likes={item.likes}
             user={user}

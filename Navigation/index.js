@@ -16,10 +16,12 @@ import AddScreen from "../components/Main/Add";
 import SavePost from "../components/Main/Save";
 import UserPosts from "../components/Main/UserPosts";
 import EditProfile from "../components/Main/EditProfile";
+import OtherProfile from "../components/Main/OtherProfile";
 
 import { auth, db } from "../firebase";
 import { Text, View } from "react-native";
 import { ActivityIndicator, Colors } from "react-native-paper";
+import Signup from "../components/Auth/Register";
 
 const Stack = createNativeStackNavigator();
 
@@ -69,6 +71,7 @@ export default function NavigationStack({ navigation }) {
             }}
           />
           <Stack.Screen options={{headerLargeTitle: true}} name="Login" component={Login} />
+          <Stack.Screen options={{headerLargeTitle: true}} name="Signup" component={Signup} />
           <Stack.Screen options={{headerLargeTitle: true}}  name="Register" component={Register} />
           <Stack.Screen 
             name="ForgotPW"
@@ -117,6 +120,11 @@ export default function NavigationStack({ navigation }) {
             headerTitle: "Edit Profile",
             title: "Edit Profile",
         })}
+        />
+        <Stack.Screen
+          name="OtherProfile"
+          component={OtherProfile}
+          navigation={navigation}
         />
       </Stack.Navigator>
     </NavigationContainer>

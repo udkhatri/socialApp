@@ -84,7 +84,7 @@ export default function Login({ navigation }) {
         <Button
           uppercase={false}
           style={styles.button}
-          onPress={() => navigation.navigate("Sign Up")}
+          onPress={() => navigation.navigate("Signup")}
         >
           Don't have account? Signup here
         </Button>
