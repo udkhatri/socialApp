@@ -14,6 +14,9 @@ export const fetchUser = (userId, callback) => {
       }
     });
 };
+export const deletePost = (postId) => {
+  db.collection("posts").doc(postId).delete();
+}
 export const fetchUserById = (userId, callback) => {
   console.log("userId: ", userId);
   db

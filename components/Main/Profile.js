@@ -26,6 +26,8 @@ import { auth, db, fs } from "../../firebase";
 import { fetchUser,fetchUserPosts } from "../../components/UserFunctions";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import { useFocusEffect } from '@react-navigation/native';
+
 import styles from "./styles";
 
 const Tab = createMaterialTopTabNavigator();
@@ -43,6 +45,16 @@ const Profile = ({ navigation }, props) => {
       fetchPosts(user.id)
     });
   }, []);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      fetchUser("", (user) => {
+      console.log("user: ", user);
+      setUser(user);
+      fetchPosts(user.id)
+    });
+    }, [user])
+  );
 
   const fetchPosts = (userId) =>{
     setLoading(true);
@@ -139,8 +151,8 @@ const Profile = ({ navigation }, props) => {
           justifyContent: "space-between",
         }}
       >
-        <Appbar.Content title={user?.userName ? user?.userName : user?.name} />
-        <Appbar.Action icon="cog" onPress={onLSettingPress} />
+        <Appbar.Content title={user?.userName ? user?.userName : user?.name} titleStyle={{fontWeight: "bold"}}/>
+        {/* <Appbar.Action icon="cog" onPress={onLSettingPress} /> */}
         <Appbar.Action icon="logout" onPress={onLogoutPress} />
       </Appbar.Header>
       <View style={styles.contentContainer}>

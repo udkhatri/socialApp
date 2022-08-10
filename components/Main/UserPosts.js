@@ -5,7 +5,7 @@ const UserPosts = (props) => {
   const { navigation, post, index , user, savedPost} = props.route.params;
   useEffect(() => {
     console.log("post are: ",post);
-  }, []);
+  }, [post]);
   return (
     <View>
       <FlatList
@@ -13,6 +13,9 @@ const UserPosts = (props) => {
         showsHorizontalScrollIndicator={false}
         data={post}
         initialScrollIndex={index}
+        onScrollToIndexFailed={() => {
+          console.log("onScrollToIndexFailed");
+        }}
         renderItem={({ item, index }) => (
           <PostCard
             url={item.downloadURL}

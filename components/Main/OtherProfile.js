@@ -96,6 +96,13 @@ const OtherProfile = (props) => {
         numColumns={3}
         horizontal={false}
         data={post}
+        ListEmptyComponent={() => {
+          return (
+              <View style={{ justifyContent: "center", alignItems: "center", flex: 1,height: 400 }}>
+                <Caption>{`${userData?.name} has not yet posted anything. `}</Caption>
+              </View>
+            );
+        }}
         refreshControl={<RefreshControl onRefresh={()=>fetchPosts(user.id)} refreshing={loading} />}
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}

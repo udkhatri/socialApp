@@ -9,12 +9,14 @@ import {
   Paragraph,
   ActivityIndicator,
   Caption,
+  Menu,
+  Provider
 } from "react-native-paper";
 import { Image } from "react-native-elements";
 import { Feather } from "@expo/vector-icons";
 import {toDateTime} from './reusableComponets'
 import { db, auth, fs} from "../../firebase";
-import {savePost,removeSavedPost,fetchUser} from '../UserFunctions'
+import {savePost,removeSavedPost,deletePost} from '../UserFunctions'
 import dynamicStyles from "./styles";
 
 const PostCard = (props) => {
@@ -33,6 +35,9 @@ const PostCard = (props) => {
   console.log("userId: ",userId);
   const styles = dynamicStyles();
 const [savedPost, setSavedPost] = useState(false)
+const [visible, setVisible] = useState(false)
+const [menuAnchor, setMenuAnchor] = useState({ x: 0, y: 0 })
+
   useEffect(() => {
     if (savedPosts) {
       if (savedPosts.includes(post.id)) {
@@ -43,11 +48,36 @@ const [savedPost, setSavedPost] = useState(false)
       }
     }
   }, []);
+  const onIconPress = (event) => {
+    const { nativeEvent } = event;
+    const anchor = {
+      x: nativeEvent.pageX,
+      y: nativeEvent.pageY,
+    };
 
+    setMenuAnchor(anchor);
+    openMenu();
+  }
+  const openMenu = () => {
+    setVisible(true);
+  }
+  const closeMenu = () => {
+    setVisible(false);
+  }
   return (
     <Card
       style={[styles.cardContainer, styles.elevation]}
     >
+     <Menu
+        visible={visible}
+        onDismiss={closeMenu}
+        anchor={menuAnchor}
+      >
+        <Menu.Item onPress={() => {
+          setVisible(false);
+          deletePost(post.id);
+        }} title="Delete" />
+      </Menu>
       <Card.Title
         style={styles.cardTitle}
         titleStyle={styles.cardTitleText}
@@ -60,7 +90,7 @@ const [savedPost, setSavedPost] = useState(false)
           />
         )}
         right={(props) => (
-          auth.currentUser.uid == userId && <IconButton {...props} icon="dots-vertical" onPress={() => {}} />
+          auth.currentUser.uid == userId && <IconButton {...props} icon="dots-vertical" onPress={onIconPress} />
         )}
        
       />
