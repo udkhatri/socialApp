@@ -74,7 +74,7 @@ const EditProfile = (props) => {
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [1, 1],
-      quality: 0.5,
+      quality: 0.1,
     });
     if (!result.cancelled) {
         console.log(result.uri);

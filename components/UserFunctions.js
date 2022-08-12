@@ -107,6 +107,30 @@ export const fetchUserSavedPosts = async (posts, callback) => {
     })
   })
 }
+export const likePost = (postID) => {
+  const id = auth.currentUser.uid;
+  db
+  .collection("posts")
+    .doc(postID)
+    .update({
+      likes: firebase.firestore.FieldValue.arrayUnion(id),
+    })
+    .catch((error) => {
+      console.log('error', error);
+    });
+}
+export const unlikePost = (postID) => {
+  const id = auth.currentUser.uid;
+  db
+  .collection("posts")
+    .doc(postID)
+    .update({
+      likes: firebase.firestore.FieldValue.arrayRemove(id),
+    })
+    .catch((error) => {
+      console.log('error', error);
+    });
+}
 export const fetchAllPosts = async (callback) => {
   var Posts = [];
   await db

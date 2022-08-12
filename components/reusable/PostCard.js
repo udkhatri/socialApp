@@ -16,7 +16,7 @@ import { Image } from "react-native-elements";
 import { Feather } from "@expo/vector-icons";
 import {toDateTime} from './reusableComponets'
 import { db, auth, fs} from "../../firebase";
-import {savePost,removeSavedPost,deletePost} from '../UserFunctions'
+import {savePost,removeSavedPost,deletePost, likePost, unlikePost} from '../UserFunctions'
 import dynamicStyles from "./styles";
 
 const PostCard = (props) => {
@@ -33,11 +33,17 @@ const PostCard = (props) => {
     savedPosts
   } = props;
   const styles = dynamicStyles();
-const [savedPost, setSavedPost] = useState(false)
-const [visible, setVisible] = useState(false)
+  const [savedPost, setSavedPost] = useState(false)
+  const [isLiked, setLiked] = useState(false)
+  const [visible, setVisible] = useState(false)
+  const [totalLikes, setTotalLikes] = useState(0)
 const [menuAnchor, setMenuAnchor] = useState({ x: 0, y: 0 })
 
   useEffect(() => {
+    if(post.likes){
+      post.likes.includes(auth.currentUser.uid) ? setLiked(true) : setLiked(false)
+    }
+    setTotalLikes(post.likes?.length)
     if (savedPosts) {
       if (savedPosts.includes(post.id)) {
         setSavedPost(true);
@@ -115,8 +121,17 @@ const [menuAnchor, setMenuAnchor] = useState({ x: 0, y: 0 })
         <View style={{ flexDirection: "row" }}>
           <IconButton
             {...props}
-            icon="heart-outline"
-            onPress={() => {}}
+            icon={isLiked ? "heart" :"heart-outline"}
+            onPress={() => {
+            isLiked ? (
+              unlikePost(post.id),
+              totalLikes > 0 ? setTotalLikes(totalLikes - 1) : setTotalLikes(0)
+              ):(
+                likePost(post.id),
+                setTotalLikes(totalLikes + 1)
+                )
+            setLiked(!isLiked)
+            }}
             style={[styles.cardActionButton, styles.elevation]}
           />
           {/* Will implement this features in future */}
@@ -149,7 +164,7 @@ const [menuAnchor, setMenuAnchor] = useState({ x: 0, y: 0 })
       </Card.Actions>
       <Card.Content style={styles.cardContent}>
         <Title>
-          <Text style={{ fontWeight: "bold" }}>{likes}</Text> Likes
+          <Text style={{ fontWeight: "bold" }}>{totalLikes}</Text> Likes
         </Title>
         {caption?.length > 0 && <Paragraph>{caption}</Paragraph>}
         <Caption style={styles.timeStyle}>{toDateTime(date)}</Caption>

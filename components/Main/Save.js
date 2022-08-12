@@ -50,7 +50,7 @@ const Save = (props) => {
       .set({
         userId: auth.currentUser.uid,
         postBy: firebase.firestore().doc('/users/' + auth.currentUser.uid),
-        likes: 0,
+        likes: [],
         downloadURL,
         caption,
         creation: fs.FieldValue.serverTimestamp(),

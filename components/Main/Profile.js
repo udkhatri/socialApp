@@ -47,6 +47,14 @@ const Profile = ({ navigation }, props) => {
       fetchSavedPosts(user?.savedPost)
     });
   }, []);
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      fetchPosts(auth.currentUser.uid)
+    });
+    // Return the function to unsubscribe from the event so it gets removed on unmount
+    return unsubscribe;
+  }, [navigation]);
+
   const fetchPosts = (userId) =>{
     setLoading(true);
     fetchUserPosts(userId, (posts) => {
@@ -115,9 +123,10 @@ const Profile = ({ navigation }, props) => {
     </TouchableOpacity>
   }
   const renderSavedItem = ({ item, index }) => {
+    console.log("saved item is: ",item);
     return <TouchableOpacity
       onPress={() => {
-        navigation.navigate("UserPosts", { savedPost, index, user, savedPost: user.savedPost });
+        navigation.navigate("UserPosts", { post: savedPost, index, user, savedPost: user.savedPost });
       }}
     >
       <Image

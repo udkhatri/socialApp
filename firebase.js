@@ -3,13 +3,13 @@ import "firebase/firestore";
 import "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBh0FmJ-qoHsNKXMQlKIbYar4U_yQ3ZVr0",
-  authDomain: "instagram-udkhatri.firebaseapp.com",
-  projectId: "instagram-udkhatri",
-  storageBucket: "instagram-udkhatri.appspot.com",
-  messagingSenderId: "1027617421094",
-  appId: "1:1027617421094:web:41fbf996c040312158b3e7",
-  measurementId: "G-RHS3LZJ1FH"
+  apiKey: "AIzaSyAJACoavkHZ1xzklRJ5TTB4KhseNxpcwPM",
+  authDomain: "socialshare-2f71b.firebaseapp.com",
+  projectId: "socialshare-2f71b",
+  storageBucket: "socialshare-2f71b.appspot.com",
+  messagingSenderId: "747767873576",
+  appId: "1:747767873576:web:709739659cb3dfeeb4351d",
+  measurementId: "G-9K9NRGGP69"
 };
 
 let app;
