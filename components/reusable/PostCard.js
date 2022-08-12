@@ -32,7 +32,6 @@ const PostCard = (props) => {
     user,
     savedPosts
   } = props;
-  console.log("userId: ",userId);
   const styles = dynamicStyles();
 const [savedPost, setSavedPost] = useState(false)
 const [visible, setVisible] = useState(false)
@@ -120,7 +119,8 @@ const [menuAnchor, setMenuAnchor] = useState({ x: 0, y: 0 })
             onPress={() => {}}
             style={[styles.cardActionButton, styles.elevation]}
           />
-          <IconButton
+          {/* Will implement this features in future */}
+          {/* <IconButton
             {...props}
             icon="message-outline"
             onPress={() => {}}
@@ -133,7 +133,7 @@ const [menuAnchor, setMenuAnchor] = useState({ x: 0, y: 0 })
             )}
             onPress={() => {}}
             style={[styles.cardActionButton, styles.elevation]}
-          />
+          /> */}
           
         </View>
 

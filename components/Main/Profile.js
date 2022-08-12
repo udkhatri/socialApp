@@ -23,7 +23,7 @@ import {
 import { Text } from "react-native-elements";
 
 import { auth, db, fs } from "../../firebase";
-import { fetchUser,fetchUserPosts } from "../../components/UserFunctions";
+import { fetchUser,fetchUserPosts, fetchUserSavedPosts } from "../../components/UserFunctions";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { useFocusEffect } from '@react-navigation/native';
@@ -35,6 +35,7 @@ const Tab = createMaterialTopTabNavigator();
 const Profile = ({ navigation }, props) => {
   const width = useWindowDimensions().width;
   const [post, setpost] = useState([]);
+  const [savedPost, setSavedPost] = useState([]);
   const [user, setUser] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -43,24 +44,21 @@ const Profile = ({ navigation }, props) => {
       console.log("user: ", user);
       setUser(user);
       fetchPosts(user.id)
+      fetchSavedPosts(user?.savedPost)
     });
   }, []);
-
-  useFocusEffect(
-    React.useCallback(() => {
-      fetchUser("", (user) => {
-      console.log("user: ", user);
-      setUser(user);
-      fetchPosts(user.id)
-    });
-    }, [user])
-  );
-
   const fetchPosts = (userId) =>{
     setLoading(true);
     fetchUserPosts(userId, (posts) => {
-      console.log("posts are: ",posts);
       setpost(posts);
+      setLoading(false);
+    })
+  }
+  const fetchSavedPosts = (savedPosts) =>{
+    setLoading(true);
+    fetchUserSavedPosts(savedPosts, (posts) => {
+      console.log("saved posts are: ",posts.length);
+      setSavedPost(posts);
       setLoading(false);
     })
   }
@@ -90,10 +88,36 @@ const Profile = ({ navigation }, props) => {
     navigation.navigate("Settings");
   }
   const renderItem = ({ item, index }) => {
-    // <Text>{item.id} hello boys</Text>
     return <TouchableOpacity
       onPress={() => {
         navigation.navigate("UserPosts", { post, index, user, savedPost: user.savedPost });
+      }}
+    >
+      <Image
+        PlaceholderContent={
+          <ActivityIndicator
+            animating={true}
+            color={"gray"}
+            size="small"
+          />
+        }
+        source={{
+          uri: item.downloadURL,
+        }}
+        style={{
+          flex: 1,
+          marginRight: 1.5,
+          marginBottom: 1.5,
+          width: width / 3,
+          height: width / 3,
+        }}
+      />
+    </TouchableOpacity>
+  }
+  const renderSavedItem = ({ item, index }) => {
+    return <TouchableOpacity
+      onPress={() => {
+        navigation.navigate("UserPosts", { savedPost, index, user, savedPost: user.savedPost });
       }}
     >
       <Image
@@ -134,9 +158,17 @@ const Profile = ({ navigation }, props) => {
   };
   const PostsTaggedScreen = () => {
     return (
-      <View style={{ justifyContent: "center", alignItems: "center", flex: 1 }}>
-        <Caption>{`You don't have any saved posts`}</Caption>
-      </View>
+      <FlatList
+      style={{ paddingTop: 2 }}
+      numColumns={3}
+      horizontal={false}
+      data={savedPost}
+      refreshControl={<RefreshControl onRefresh={()=>fetchSavedPosts(user?.savedPost)} refreshing={loading} />}
+      showsVerticalScrollIndicator={false}
+      showsHorizontalScrollIndicator={false}
+      renderItem={renderSavedItem}
+      keyExtractor={(item) => item.id}
+    />
     );
   };
 

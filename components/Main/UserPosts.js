@@ -3,9 +3,7 @@ import { View, Text, FlatList } from "react-native";
 import PostCard from "../reusable/PostCard";
 const UserPosts = (props) => {
   const { navigation, post, index , user, savedPost} = props.route.params;
-  useEffect(() => {
-    console.log("post are: ",post);
-  }, [post]);
+
   return (
     <View>
       <FlatList

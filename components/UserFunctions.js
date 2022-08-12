@@ -18,7 +18,6 @@ export const deletePost = (postId) => {
   db.collection("posts").doc(postId).delete();
 }
 export const fetchUserById = (userId, callback) => {
-  console.log("userId: ", userId);
   db
     .collection("users")
     .doc(userId)
@@ -84,6 +83,30 @@ export const fetchUserPosts = async (userId, callback) => {
       })
     });
 };
+export const fetchUserSavedPosts = async (posts, callback) => {
+  console.log("fetching saved posts",posts.length);
+  var Posts = [];
+  posts?.forEach(async(post) => {
+    await db
+    .collection("posts")
+    .doc(post)
+    .get()
+    .then(async(doc) => {
+      console.log("this is a post with Id", doc.exists);
+      if(doc.exists){
+        const data = doc.data();
+        data.id = doc.id;
+        const allDataWithUser = await data.postBy.get();
+        data.postBy = allDataWithUser.data();
+        Posts.push(data);
+      }
+    })
+    .then(() => {
+      console.log("Saved Posts", Posts.length);
+      callback(Posts);
+    })
+  })
+}
 export const fetchAllPosts = async (callback) => {
   var Posts = [];
   await db
@@ -100,7 +123,7 @@ export const fetchAllPosts = async (callback) => {
           Posts.push(data);
         })
       ).then(() => {
-        console.log("Posts",Posts.length);
+        console.log("all Posts",Posts.length);
         callback(Posts);
       })
     });

@@ -84,10 +84,9 @@ const EditProfile = (props) => {
 
   const uploadImage = async (uri) => {
     console.log("uploading");
-
-    const childPath = `profilePictures/${user.id+Math.random().toString(
+    const childPath = `${user.id+Math.random().toString(
       36
-    )}`;
+    )+"dp"}`;
     console.log(childPath);
 
     const responce = await fetch(uri);

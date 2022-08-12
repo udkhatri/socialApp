@@ -14,7 +14,7 @@ const Save = (props) => {
     console.log("uploading");
     setLoading(true);
     const uri = props.route.params.image;
-    const childPath = `post/${auth.currentUser.uid}/${Math.random().toString(
+    const childPath = `${auth.currentUser.uid}${Math.random().toString(
       36
     )}`;
     console.log(childPath);

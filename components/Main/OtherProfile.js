@@ -111,13 +111,6 @@ const OtherProfile = (props) => {
       />
     ) 
   };
-  const PostsTaggedScreen = () => {
-    return (
-      <View style={{ justifyContent: "center", alignItems: "center", flex: 1 }}>
-        <Caption>{`You don't have any saved posts`}</Caption>
-      </View>
-    );
-  };
 
   return (
     <SafeAreaView style={styles.container}>
