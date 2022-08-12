@@ -30,8 +30,6 @@ export default function Signup({ navigation }) {
           db.collection("users").doc(auth.currentUser.uid).set({
             name: Name,
             email: Email,
-            userName: "",
-            bio: "",
             id: auth.currentUser.uid,
             profilePicUrl: null,
             userName: ""
