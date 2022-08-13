@@ -3,7 +3,6 @@ import { View, Text, FlatList,RefreshControl } from "react-native";
 import PostCard from "../reusable/PostCard";
 const AllPosts = (props) => {
   const { navigation, posts, fetchPosts , loading, user} = props;
-
   return (
     <View>
       <FlatList
@@ -24,6 +23,7 @@ const AllPosts = (props) => {
             date={item.creation.seconds}
             likes={item.likes}
             user={user}
+            navigation={navigation}
           />
         )}
         ListFooterComponent={() => (

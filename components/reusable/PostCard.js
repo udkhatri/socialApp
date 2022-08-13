@@ -1,5 +1,5 @@
 import React,{useEffect, useState} from "react";
-import { View, Alert } from "react-native";
+import { View, Alert, TouchableOpacity } from "react-native";
 import {
   Avatar,
   Text,
@@ -30,7 +30,8 @@ const PostCard = (props) => {
     likes,
     post,
     user,
-    savedPosts
+    savedPosts,
+    navigation,
   } = props;
   const styles = dynamicStyles();
   const [savedPost, setSavedPost] = useState(false)
@@ -101,11 +102,21 @@ const [menuAnchor, setMenuAnchor] = useState({ x: 0, y: 0 })
         titleStyle={styles.cardTitleText}
         title={userName} 
         left={(props) => (
-          <Avatar.Image
+          <TouchableOpacity
+          onPress={()=>{
+            auth.currentUser.uid == userId ? navigation.navigate("Profile") :
+              navigation.navigate("OtherProfile", {
+                  user: user,
+                });
+          }}
+          >
+ <Avatar.Image
             size={44}
             style={styles.elevation}
             source={userProfilePic ? {uri: userProfilePic} : require("../../assets/defaultProfilePic.png")}
           />
+          </TouchableOpacity>
+         
         )}
         right={(props) => (
           auth.currentUser.uid == userId && <IconButton {...props} icon="dots-vertical" onPress={onIconPress} />

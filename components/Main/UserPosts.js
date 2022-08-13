@@ -27,6 +27,7 @@ const UserPosts = (props) => {
             likes={item.likes}
             user={user}
             savedPosts={savedPost}
+            navigation={navigation}
           />
         )}
         ListFooterComponent={() => (

@@ -59,7 +59,11 @@ export default function Add({ navigation }) {
   };
 
   if (hasCameraPermission === false || hasCameraPermission === null || hasGalleryPermission === false) {
-    return <Text>No access to camera</Text>;
+    return  (
+      <View style={[styles.Camcontainer,{paddingHorizontal:30}]}>
+          <Text>Camera access is denied. Please Go to settings and turn on the camera access.</Text>
+      </View>
+      )
   }
   return (
     <View style={styles.container}>

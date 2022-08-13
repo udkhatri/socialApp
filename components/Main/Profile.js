@@ -63,6 +63,7 @@ const Profile = ({ navigation }, props) => {
     })
   }
   const fetchSavedPosts = (savedPosts) =>{
+    console.log("savedPosts: ", savedPosts);
     setLoading(true);
     fetchUserSavedPosts(savedPosts, (posts) => {
       console.log("saved posts are: ",posts.length);
