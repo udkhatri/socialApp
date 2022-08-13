@@ -14,7 +14,7 @@ import { db, fs, auth } from "../../firebase";
 const Search = (props) => {
   const [user, setUser] = useState([]);
   const [userName, setUserName] = useState("");
-  const fetchUserPosts = async (search) => {
+  const fetchUser = async (search) => {
     search == "" ? setUser([]) :
     await db
       .collection("users")
@@ -48,7 +48,7 @@ const Search = (props) => {
             inputStyle={{ color: "black" }}
             placeholder="Type Here..."
             onChangeText={(text) => {
-              fetchUserPosts(text);
+              fetchUser(text);
               setUserName(text);
             }}
             value={userName}
