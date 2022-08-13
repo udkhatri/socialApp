@@ -6,6 +6,9 @@ import {
 import Constants from "expo-constants";
 import Navigation from "./Navigation";
 import { StyleSheet, LogBox } from "react-native";
+import { StatusBar } from 'expo-status-bar';
+
+console.disableYellowBox = true;
 const theme = {
   ...DefaultTheme,
   roundness: 9,
@@ -22,6 +25,7 @@ export default function App() {
   return (
     <PaperProvider theme={theme}>
       <Navigation style={styles.droidSafeArea} />
+      <StatusBar style="dark" />
     </PaperProvider>
    
   );

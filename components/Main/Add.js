@@ -19,7 +19,6 @@ export default function Add({ navigation }) {
     (async () => {
       const cameraStatus = await Camera.requestCameraPermissionsAsync();
       setHasCameraPermission(cameraStatus.status === "granted");
-
       const galleryStatus = await ImagePicker.requestMediaLibraryPermissionsAsync();
       setHasGalleryPermission(galleryStatus.status === "granted");
     })();
