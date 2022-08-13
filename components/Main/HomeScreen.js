@@ -46,8 +46,8 @@ const HomeScreen = ({ navigation }) => {
             onPress={() => navigation.navigate("StoryScreen")}
           />
           <Image
-            source={require("../../assets/insta.png")}
-            style={{ height: 39, width: 120 }}
+            source={require("../../assets/headTitle.png")}
+            style={{ height: 25, width: 160 }}
           />
           <Appbar.Action
             icon={() =>{ return <Ionicons name="ios-chatbox-ellipses-outline" size={24} color="black" />}}
