@@ -1,5 +1,5 @@
 import React,{useEffect, useState} from "react";
-import { View, Platform } from "react-native";
+import { View, Alert } from "react-native";
 import {
   Avatar,
   Text,
@@ -79,9 +79,22 @@ const [menuAnchor, setMenuAnchor] = useState({ x: 0, y: 0 })
         anchor={menuAnchor}
       >
         <Menu.Item onPress={() => {
+           Alert.alert("Delete", "Are you sure to want to delete this post?", [
+            {
+              text: "No",
+              onPress: () => console.log("Cancel Pressed"),
+              style: "cancel",
+            },
+            {
+              text: "Yes",
+              onPress: () => {
+                deletePost(post.id);
+              },
+            },
+          ]);
           setVisible(false);
-          deletePost(post.id);
-        }} title="Delete" />
+          
+        }} title="Delete" /> 
       </Menu>
       <Card.Title
         style={styles.cardTitle}
