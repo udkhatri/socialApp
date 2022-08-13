@@ -1,10 +1,10 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import firebase from "firebase/app";
 require("firebase/firebase-storage");
 import { View, Text, Alert, Image, StyleSheet } from "react-native";
 import { Button, TextInput, ProgressBar, Switch } from "react-native-paper";
 import { auth, db, fs } from "../../firebase";
-import * as Location from 'expo-location';
+import * as Location from "expo-location";
 
 const Save = (props) => {
   const [caption, setCaption] = useState("");
@@ -16,25 +16,23 @@ const Save = (props) => {
     console.log("useEffect");
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
-        setErrorMsg('Permission to access location was denied');
+      if (status !== "granted") {
+        setErrorMsg("Permission to access location was denied");
         return;
       }
       let location = await Location.getCurrentPositionAsync({});
       setLocation(location.coords);
-      console.log("location is: ",location);
+      console.log("location is: ", location);
     })();
   }, []);
   const onToggleSwitch = () => setIsSwitchOn(!isSwitchOn);
   const uploadImage = async () => {
     console.log("uploading");
     setLoading(true);
-    
+
     const uri = props.route.params.image;
-    const childPath = `${auth.currentUser.uid}${Math.random().toString(
-      36
-    )}`;
-   
+    const childPath = `${auth.currentUser.uid}${Math.random().toString(36)}`;
+
     const responce = await fetch(uri);
     const blob = await responce.blob();
 
@@ -65,14 +63,16 @@ const Save = (props) => {
       // .collection("userPosts")
       .set({
         userId: auth.currentUser.uid,
-        postBy: firebase.firestore().doc('/users/' + auth.currentUser.uid),
+        postBy: firebase.firestore().doc("/users/" + auth.currentUser.uid),
         likes: [],
         downloadURL,
         caption,
-        location : isSwitchOn ? {
-          latitude: location?.latitude,
-          longitude: location?.longitude
-        } : null,
+        location: isSwitchOn
+          ? {
+              latitude: location?.latitude,
+              longitude: location?.longitude,
+            }
+          : null,
         creation: fs.FieldValue.serverTimestamp(),
       })
       .then(function () {
@@ -86,9 +86,10 @@ const Save = (props) => {
       </View>
 
       <View style={{ width: "90%", marginTop: 10 }}>
-      <View style ={{flexDirection:'row', alignItems:'center'}}>
-      <Text>Share location: </Text><Switch value={isSwitchOn} onValueChange={onToggleSwitch} />
-      </View>
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <Text>Share location: </Text>
+          <Switch value={isSwitchOn} onValueChange={onToggleSwitch} />
+        </View>
         <TextInput
           placeholder="Write a caption"
           mode="outlined"

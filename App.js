@@ -1,12 +1,9 @@
 import React from "react";
-import {
-  DefaultTheme,
-  Provider as PaperProvider,
-} from "react-native-paper";
+import { DefaultTheme, Provider as PaperProvider } from "react-native-paper";
 import Constants from "expo-constants";
 import Navigation from "./Navigation";
 import { StyleSheet, LogBox } from "react-native";
-import { StatusBar } from 'expo-status-bar';
+import { StatusBar } from "expo-status-bar";
 
 console.disableYellowBox = true;
 const theme = {
@@ -27,7 +24,6 @@ export default function App() {
       <Navigation style={styles.droidSafeArea} />
       <StatusBar style="dark" />
     </PaperProvider>
-   
   );
 }
 const styles = StyleSheet.create({

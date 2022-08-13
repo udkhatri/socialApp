@@ -1,4 +1,4 @@
-import React, { useEffect, useState, } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   StyleSheet,
@@ -23,7 +23,7 @@ import {
 import { Text } from "react-native-elements";
 
 import { auth, db, fs } from "../../firebase";
-import { fetchUserById,fetchUserPosts, fetchUser } from "../UserFunctions";
+import { fetchUserById, fetchUserPosts, fetchUser } from "../UserFunctions";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import styles from "./styles";
@@ -31,7 +31,6 @@ import styles from "./styles";
 const Tab = createMaterialTopTabNavigator();
 
 const OtherProfile = (props) => {
-
   const { user } = props.route.params;
 
   const width = useWindowDimensions().width;
@@ -42,53 +41,55 @@ const OtherProfile = (props) => {
   useEffect(() => {
     fetchUserById(user.id, (user) => {
       console.log("user: ", user);
-      props.navigation.setOptions({ title: user?.name  })
-      setUserData(user)
-    })
-    fetchUser("",(user) => {
-      setCurrentUser(user)
-    })
-   
-    fetchPosts(user.id)
+      props.navigation.setOptions({ title: user?.name });
+      setUserData(user);
+    });
+    fetchUser("", (user) => {
+      setCurrentUser(user);
+    });
+
+    fetchPosts(user.id);
   }, []);
 
-  const fetchPosts = (userId) =>{
+  const fetchPosts = (userId) => {
     setLoading(true);
     fetchUserPosts(userId, (posts) => {
-      
-      console.log("posts are: ",posts);
+      console.log("posts are: ", posts);
       setpost(posts);
       setLoading(false);
-    })
-  }
+    });
+  };
   const renderItem = ({ item, index }) => {
     // <Text>{item.id} hello boys</Text>
-    return <TouchableOpacity
-      onPress={() => {
-        props.navigation.navigate("UserPosts", { post, index, userData , savedPost: currentUser?.savedPost});
-      }}
-    >
-      <Image
-        PlaceholderContent={
-          <ActivityIndicator
-            animating={true}
-            color={"gray"}
-            size="small"
-          />
-        }
-        source={{
-          uri: item.downloadURL,
+    return (
+      <TouchableOpacity
+        onPress={() => {
+          props.navigation.navigate("UserPosts", {
+            post,
+            index,
+            userData,
+            savedPost: currentUser?.savedPost,
+          });
         }}
-        style={{
-          flex: 1,
-          marginRight: 1.5,
-          marginBottom: 1.5,
-          width: width / 3,
-          height: width / 3,
-        }}
-      />
-    </TouchableOpacity>
-  }
+      >
+        <Image
+          PlaceholderContent={
+            <ActivityIndicator animating={true} color={"gray"} size="small" />
+          }
+          source={{
+            uri: item.downloadURL,
+          }}
+          style={{
+            flex: 1,
+            marginRight: 1.5,
+            marginBottom: 1.5,
+            width: width / 3,
+            height: width / 3,
+          }}
+        />
+      </TouchableOpacity>
+    );
+  };
   const PostsScreen = () => {
     return (
       <FlatList
@@ -98,34 +99,51 @@ const OtherProfile = (props) => {
         data={post}
         ListEmptyComponent={() => {
           return (
-              <View style={{ justifyContent: "center", alignItems: "center", flex: 1,height: 400 }}>
-                <Caption>{`${userData?.name} has not yet posted anything. `}</Caption>
-              </View>
-            );
+            <View
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+                flex: 1,
+                height: 400,
+              }}
+            >
+              <Caption>{`${userData?.name} has not yet posted anything. `}</Caption>
+            </View>
+          );
         }}
-        refreshControl={<RefreshControl onRefresh={()=>fetchPosts(user.id)} refreshing={loading} />}
+        refreshControl={
+          <RefreshControl
+            onRefresh={() => fetchPosts(user.id)}
+            refreshing={loading}
+          />
+        }
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
       />
-    ) 
+    );
   };
 
   return (
     <SafeAreaView style={styles.container}>
-     
       <View style={styles.contentContainer}>
         <View style={styles.userRaw}>
           <Avatar.Image
             style={{ elevation: 10 }}
             size={100}
-            source={userData?.profilePicUrl ? { uri: userData?.profilePicUrl } : require("../../assets/defaultProfilePic.png")}
+            source={
+              userData?.profilePicUrl
+                ? { uri: userData?.profilePicUrl }
+                : require("../../assets/defaultProfilePic.png")
+            }
           />
           <View style={{ flex: 1 }}>
             <View style={styles.userDataContaienr}>
               <View style={{ alignItems: "center" }}>
-                <Text style={{ fontWeight: "bold", fontSize: 18 }}>{post?.length}</Text>
+                <Text style={{ fontWeight: "bold", fontSize: 18 }}>
+                  {post?.length}
+                </Text>
                 <Caption style={{ marginTop: -5 }}>Posts</Caption>
               </View>
               <View style={{ alignItems: "center" }}>
@@ -137,13 +155,16 @@ const OtherProfile = (props) => {
                 <Caption style={{ marginTop: -5 }}>Following</Caption>
               </View>
             </View>
-            
           </View>
         </View>
-        {userData?.name && userData?.name != "" && <Text style={styles.boldText}>{userData?.name}</Text>}
-        {userData?.bio && userData?.bio != "" && <Caption style={styles.caption}>{userData?.bio}</Caption>}
+        {userData?.name && userData?.name != "" && (
+          <Text style={styles.boldText}>{userData?.name}</Text>
+        )}
+        {userData?.bio && userData?.bio != "" && (
+          <Caption style={styles.caption}>{userData?.bio}</Caption>
+        )}
       </View>
-    
+
       <Tab.Navigator
         screenOptions={{
           tabBarActiveTintColor: "#84a59d",
@@ -165,7 +186,6 @@ const OtherProfile = (props) => {
           }}
           component={PostsScreen}
         />
-      
       </Tab.Navigator>
     </SafeAreaView>
   );

@@ -1,8 +1,8 @@
-import React,{useEffect} from "react";
+import React, { useEffect } from "react";
 import { View, Text, FlatList } from "react-native";
 import PostCard from "../reusable/PostCard";
 const UserPosts = (props) => {
-  const { navigation, post, index , user, savedPost} = props.route.params;
+  const { navigation, post, index, user, savedPost } = props.route.params;
 
   return (
     <View>

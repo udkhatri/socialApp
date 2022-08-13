@@ -39,36 +39,35 @@ const EditProfile = (props) => {
   const [hasGalleryPermission, setHasGalleryPermission] = useState(null);
 
   const updateProfile = () => {
-    if(name == ""){
+    if (name == "") {
       Alert.alert("Name is required");
       return;
-    }
-    else if(email == ""){
+    } else if (email == "") {
       Alert.alert("Email is required");
       return;
-    }
-    else{
+    } else {
       var userData = {
         name: name,
         email: email,
-        bio: bio ? bio.length > 0 ? bio : null : null,
-        userName: userName ? userName.length > 0 ? userName : null : null,
+        bio: bio ? (bio.length > 0 ? bio : null) : null,
+        userName: userName ? (userName.length > 0 ? userName : null) : null,
         profilePicUrl: image ? image : null,
       };
       setUserData(user.id, userData);
-  
+
       navigation.goBack();
     }
   };
 
   useEffect(() => {
     (async () => {
-        const galleryStatus = await ImagePicker.requestMediaLibraryPermissionsAsync();
-        setHasGalleryPermission(galleryStatus.status === "granted");
+      const galleryStatus =
+        await ImagePicker.requestMediaLibraryPermissionsAsync();
+      setHasGalleryPermission(galleryStatus.status === "granted");
     })();
-  }, [])
+  }, []);
 
-   const pickImage = async () => {
+  const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       // to add videos as well just alter this line
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -77,16 +76,14 @@ const EditProfile = (props) => {
       quality: 0.1,
     });
     if (!result.cancelled) {
-        console.log(result.uri);
-        uploadImage(result.uri);
+      console.log(result.uri);
+      uploadImage(result.uri);
     }
   };
 
   const uploadImage = async (uri) => {
     console.log("uploading");
-    const childPath = `${user.id+Math.random().toString(
-      36
-    )+"dp"}`;
+    const childPath = `${user.id + Math.random().toString(36) + "dp"}`;
     console.log(childPath);
 
     const responce = await fetch(uri);
@@ -119,7 +116,11 @@ const EditProfile = (props) => {
         <View style={styles.userRaw}>
           <Avatar.Image
             size={150}
-            source={image ? { uri: image } : require("../../assets/defaultProfilePic.png")}
+            source={
+              image
+                ? { uri: image }
+                : require("../../assets/defaultProfilePic.png")
+            }
           />
           <IconButton
             icon="pencil"
@@ -136,7 +137,10 @@ const EditProfile = (props) => {
           type="text"
           keyboardType="default"
           value={name}
-          onChangeText={(text) =>{ setName(text); console.log(name)}}
+          onChangeText={(text) => {
+            setName(text);
+            console.log(name);
+          }}
           style={styles.input}
         />
 
@@ -169,7 +173,7 @@ const EditProfile = (props) => {
           mode="outlined"
         />
         <Button mode="contained" style={styles.button} onPress={updateProfile}>
-            Update 
+          Update
         </Button>
       </View>
     </ScrollView>

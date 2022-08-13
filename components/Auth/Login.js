@@ -1,8 +1,8 @@
 import React from "react";
-import { View} from "react-native";
-import { Button, Text, TextInput, Banner,Colors } from "react-native-paper";
+import { View } from "react-native";
+import { Button, Text, TextInput, Banner, Colors } from "react-native-paper";
 import { auth } from "../../firebase";
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import styles from "./styles";
 export default function Login({ navigation }) {
   const [label, setLabel] = React.useState("");
@@ -33,13 +33,11 @@ export default function Login({ navigation }) {
   };
   return (
     <View style={{ backgroundColor: "#fff", flex: 1 }}>
-      
       <KeyboardAwareScrollView
-      resetScrollToCoords={{ x: 30, y: 0 }}
-      contentContainerStyle={styles.authContainer}
-      scrollEnabled={true}
-    >
-
+        resetScrollToCoords={{ x: 30, y: 0 }}
+        contentContainerStyle={styles.authContainer}
+        scrollEnabled={true}
+      >
         <TextInput
           label="Email"
           style={styles.input}
@@ -89,27 +87,26 @@ export default function Login({ navigation }) {
           Don't have account? Signup here
         </Button>
         <Banner
-        visible={visible}
-        actions={[
-          {
-            label: "Ok",
-            onPress: () => setVisible(false),
-          },
-        ]}
-        contentStyle={{
-          backgroundColor: Colors.red100,
-          borderRadius: 9,
-        }}
-        style={{
-          margin: 10,
-          borderRadius: 9,
-          marginBottom: 20,
-        }}
-      >
-        <Text style={{ fontSize: 15, color: "#000" }}>{label}</Text>
-      </Banner>
+          visible={visible}
+          actions={[
+            {
+              label: "Ok",
+              onPress: () => setVisible(false),
+            },
+          ]}
+          contentStyle={{
+            backgroundColor: Colors.red100,
+            borderRadius: 9,
+          }}
+          style={{
+            margin: 10,
+            borderRadius: 9,
+            marginBottom: 20,
+          }}
+        >
+          <Text style={{ fontSize: 15, color: "#000" }}>{label}</Text>
+        </Banner>
       </KeyboardAwareScrollView>
     </View>
   );
 }
-

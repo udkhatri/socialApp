@@ -7,14 +7,14 @@ export const androidShadow = {
 };
 const dynamicStyles = () => {
   return StyleSheet.create({
-    elevation:{
-        elevation: 5,
-        shadowOffset: {
-          width: 2,
-          height:2,
-        },
-        shadowOpacity: 0.2,
-        shadowRadius: 3,
+    elevation: {
+      elevation: 5,
+      shadowOffset: {
+        width: 2,
+        height: 2,
+      },
+      shadowOpacity: 0.2,
+      shadowRadius: 3,
     },
     cardContainer: {
       borderRadius: 15,
@@ -25,9 +25,9 @@ const dynamicStyles = () => {
     cardTextTitle: { fontSize: 18, fontWeight: "bold", marginBottom: 0 },
     cardCover: {
       height: useWindowDimensions().width + 160,
-      aspectRatio: 4/6,
+      aspectRatio: 4 / 6,
       width: "100%",
-      top:0,
+      top: 0,
       justifyContent: "space-around",
       borderRadius: 15,
     },
@@ -43,45 +43,44 @@ const dynamicStyles = () => {
       paddingHorizontal: 15,
     },
     cardActionButton: {
-    //   elevation: 5,
+      //   elevation: 5,
       backgroundColor: "white",
-    //   shadowColor: "#000",
-    //   shadowOffset: {
-    //     width: 2,
-    //     height: -4,
-    //   },
-    //   shadowOpacity: 0.5,
-    //   shadowRadius: 6,
+      //   shadowColor: "#000",
+      //   shadowOffset: {
+      //     width: 2,
+      //     height: -4,
+      //   },
+      //   shadowOpacity: 0.5,
+      //   shadowRadius: 6,
     },
-    cardContent:{ marginVertical: -10, marginBottom: -10 },
-    timeStyle:{
-        fontSize: 13,
-        paddingLeft:5,
-        fontWeight: "bold",
+    cardContent: { marginVertical: -10, marginBottom: -10 },
+    timeStyle: {
+      fontSize: 13,
+      paddingLeft: 5,
+      fontWeight: "bold",
     },
-    container:{
-        flex:1,
-        paddingTop:30,
-        alignItems: "center",
+    container: {
+      flex: 1,
+      paddingTop: 30,
+      alignItems: "center",
     },
-    pageTitle:{
-        fontSize: 30,
-        fontWeight: "bold",
-        marginBottom: 50,
-
+    pageTitle: {
+      fontSize: 30,
+      fontWeight: "bold",
+      marginBottom: 50,
     },
-    pageSubTitle:{
-        fontSize: 25,
-        fontWeight: "bold",
-        marginBottom: 10,
-        color: "grey",
+    pageSubTitle: {
+      fontSize: 25,
+      fontWeight: "bold",
+      marginBottom: 10,
+      color: "grey",
     },
-    pageSubTitle2:{
+    pageSubTitle2: {
       fontSize: 20,
       color: "grey",
       textAlign: "center",
       paddingHorizontal: 10,
-  }
+    },
   });
 };
 export default dynamicStyles;

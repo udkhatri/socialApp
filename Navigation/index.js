@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 
 //navigation
@@ -34,16 +33,15 @@ export default function NavigationStack({ navigation }) {
         setLogin(false);
         console.log(user + " !user");
         setLoaded(true);
-      }  
-        else {
-          setLoaded(true);
-          setLogin(true);
-        }
+      } else {
+        setLoaded(true);
+        setLogin(true);
+      }
     });
   }, []);
 
   if (!loaded) {
-    console.log("load: ",loaded);
+    console.log("load: ", loaded);
     return (
       <View
         style={{
@@ -70,13 +68,29 @@ export default function NavigationStack({ navigation }) {
               headerShown: false,
             }}
           />
-          <Stack.Screen options={{headerLargeTitle: true}} name="Login" component={Login} />
-          <Stack.Screen options={{headerLargeTitle: true}} name="Signup" component={Signup} />
-          <Stack.Screen options={{headerLargeTitle: true}}  name="Register" component={Register} />
-          <Stack.Screen 
+          <Stack.Screen
+            options={{ headerLargeTitle: true }}
+            name="Login"
+            component={Login}
+          />
+          <Stack.Screen
+            options={{ headerLargeTitle: true }}
+            name="Signup"
+            component={Signup}
+          />
+          <Stack.Screen
+            options={{ headerLargeTitle: true }}
+            name="Register"
+            component={Register}
+          />
+          <Stack.Screen
             name="ForgotPW"
             component={ForgotPW}
-            options={{ headerShown: true, title: "Forgot password" ,headerLargeTitle: true}}
+            options={{
+              headerShown: true,
+              title: "Forgot password",
+              headerLargeTitle: true,
+            }}
           />
         </Stack.Navigator>
       </NavigationContainer>
@@ -98,12 +112,12 @@ export default function NavigationStack({ navigation }) {
           component={AddScreen}
           navigation={navigation}
         />
-         <Stack.Screen
+        <Stack.Screen
           name="SavePost"
           component={SavePost}
           navigation={navigation}
-          />
-          <Stack.Screen
+        />
+        <Stack.Screen
           name="UserPosts"
           options={{
             headerTitle: "Posts",
@@ -112,14 +126,14 @@ export default function NavigationStack({ navigation }) {
           component={UserPosts}
           navigation={navigation}
         />
-         <Stack.Screen
+        <Stack.Screen
           name="EditProfile"
           component={EditProfile}
           navigation={navigation}
           options={({ navigation, route }) => ({
             headerTitle: "Edit Profile",
             title: "Edit Profile",
-        })}
+          })}
         />
         <Stack.Screen
           name="OtherProfile"

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   StyleSheet,
@@ -23,10 +23,14 @@ import {
 import { Text } from "react-native-elements";
 
 import { auth, db, fs } from "../../firebase";
-import { fetchUser,fetchUserPosts, fetchUserSavedPosts } from "../../components/UserFunctions";
+import {
+  fetchUser,
+  fetchUserPosts,
+  fetchUserSavedPosts,
+} from "../../components/UserFunctions";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect } from "@react-navigation/native";
 
 import styles from "./styles";
 
@@ -43,34 +47,34 @@ const Profile = ({ navigation }, props) => {
     fetchUser("", (user) => {
       console.log("user: ", user);
       setUser(user);
-      fetchPosts(user.id)
-      fetchSavedPosts(user?.savedPost)
+      fetchPosts(user.id);
+      fetchSavedPosts(user?.savedPost);
     });
   }, []);
   useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
-      fetchPosts(auth.currentUser.uid)
+    const unsubscribe = navigation.addListener("focus", () => {
+      fetchPosts(auth.currentUser.uid);
     });
     // Return the function to unsubscribe from the event so it gets removed on unmount
     return unsubscribe;
   }, [navigation]);
 
-  const fetchPosts = (userId) =>{
+  const fetchPosts = (userId) => {
     setLoading(true);
     fetchUserPosts(userId, (posts) => {
       setpost(posts);
       setLoading(false);
-    })
-  }
-  const fetchSavedPosts = (savedPosts) =>{
+    });
+  };
+  const fetchSavedPosts = (savedPosts) => {
     console.log("savedPosts: ", savedPosts);
     setLoading(true);
     fetchUserSavedPosts(savedPosts, (posts) => {
-      console.log("saved posts are: ",posts.length);
+      console.log("saved posts are: ", posts.length);
       setSavedPost(posts);
       setLoading(false);
-    })
-  }
+    });
+  };
   const onLogoutPress = () => {
     Alert.alert("Log Out", "Are you sure?", [
       {
@@ -95,62 +99,68 @@ const Profile = ({ navigation }, props) => {
   };
   const onLSettingPress = () => {
     navigation.navigate("Settings");
-  }
+  };
   const renderItem = ({ item, index }) => {
-    return <TouchableOpacity
-      onPress={() => {
-        navigation.navigate("UserPosts", { post, index, user, savedPost: user.savedPost });
-      }}
-    >
-      <Image
-        PlaceholderContent={
-          <ActivityIndicator
-            animating={true}
-            color={"gray"}
-            size="small"
-          />
-        }
-        source={{
-          uri: item.downloadURL,
+    return (
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate("UserPosts", {
+            post,
+            index,
+            user,
+            savedPost: user.savedPost,
+          });
         }}
-        style={{
-          flex: 1,
-          marginRight: 1.5,
-          marginBottom: 1.5,
-          width: width / 3,
-          height: width / 3,
-        }}
-      />
-    </TouchableOpacity>
-  }
+      >
+        <Image
+          PlaceholderContent={
+            <ActivityIndicator animating={true} color={"gray"} size="small" />
+          }
+          source={{
+            uri: item.downloadURL,
+          }}
+          style={{
+            flex: 1,
+            marginRight: 1.5,
+            marginBottom: 1.5,
+            width: width / 3,
+            height: width / 3,
+          }}
+        />
+      </TouchableOpacity>
+    );
+  };
   const renderSavedItem = ({ item, index }) => {
-    console.log("saved item is: ",item);
-    return <TouchableOpacity
-      onPress={() => {
-        navigation.navigate("UserPosts", { post: savedPost, index, user, savedPost: user.savedPost });
-      }}
-    >
-      <Image
-        PlaceholderContent={
-          <ActivityIndicator
-            animating={true}
-            color={"gray"}
-            size="small"
-          />
-        }
-        source={{
-          uri: item.downloadURL,
+    console.log("saved item is: ", item);
+    return (
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate("UserPosts", {
+            post: savedPost,
+            index,
+            user,
+            savedPost: user.savedPost,
+          });
         }}
-        style={{
-          flex: 1,
-          marginRight: 1.5,
-          marginBottom: 1.5,
-          width: width / 3,
-          height: width / 3,
-        }}
-      />
-    </TouchableOpacity>
-  }
+      >
+        <Image
+          PlaceholderContent={
+            <ActivityIndicator animating={true} color={"gray"} size="small" />
+          }
+          source={{
+            uri: item.downloadURL,
+          }}
+          style={{
+            flex: 1,
+            marginRight: 1.5,
+            marginBottom: 1.5,
+            width: width / 3,
+            height: width / 3,
+          }}
+        />
+      </TouchableOpacity>
+    );
+  };
   const PostsScreen = () => {
     return (
       <FlatList
@@ -158,27 +168,37 @@ const Profile = ({ navigation }, props) => {
         numColumns={3}
         horizontal={false}
         data={post}
-        refreshControl={<RefreshControl onRefresh={()=>fetchPosts(user.id)} refreshing={loading} />}
+        refreshControl={
+          <RefreshControl
+            onRefresh={() => fetchPosts(user.id)}
+            refreshing={loading}
+          />
+        }
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
       />
-    ) 
+    );
   };
   const PostsTaggedScreen = () => {
     return (
       <FlatList
-      style={{ paddingTop: 2 }}
-      numColumns={3}
-      horizontal={false}
-      data={savedPost}
-      refreshControl={<RefreshControl onRefresh={()=>fetchSavedPosts(user?.savedPost)} refreshing={loading} />}
-      showsVerticalScrollIndicator={false}
-      showsHorizontalScrollIndicator={false}
-      renderItem={renderSavedItem}
-      keyExtractor={(item) => item.id}
-    />
+        style={{ paddingTop: 2 }}
+        numColumns={3}
+        horizontal={false}
+        data={savedPost}
+        refreshControl={
+          <RefreshControl
+            onRefresh={() => fetchSavedPosts(user?.savedPost)}
+            refreshing={loading}
+          />
+        }
+        showsVerticalScrollIndicator={false}
+        showsHorizontalScrollIndicator={false}
+        renderItem={renderSavedItem}
+        keyExtractor={(item) => item.id}
+      />
     );
   };
 
@@ -193,7 +213,10 @@ const Profile = ({ navigation }, props) => {
           justifyContent: "space-between",
         }}
       >
-        <Appbar.Content title={user?.userName ? user?.userName : user?.name} titleStyle={{fontWeight: "bold"}}/>
+        <Appbar.Content
+          title={user?.userName ? user?.userName : user?.name}
+          titleStyle={{ fontWeight: "bold" }}
+        />
         {/* <Appbar.Action icon="cog" onPress={onLSettingPress} /> */}
         <Appbar.Action icon="logout" onPress={onLogoutPress} />
       </Appbar.Header>
@@ -202,12 +225,18 @@ const Profile = ({ navigation }, props) => {
           <Avatar.Image
             style={{ elevation: 10 }}
             size={100}
-            source={user?.profilePicUrl ? { uri: user?.profilePicUrl } : require("../../assets/defaultProfilePic.png")}
+            source={
+              user?.profilePicUrl
+                ? { uri: user?.profilePicUrl }
+                : require("../../assets/defaultProfilePic.png")
+            }
           />
           <View style={{ flex: 1 }}>
             <View style={styles.userDataContaienr}>
               <View style={{ alignItems: "center" }}>
-                <Text style={{ fontWeight: "bold", fontSize: 18 }}>{post?.length}</Text>
+                <Text style={{ fontWeight: "bold", fontSize: 18 }}>
+                  {post?.length}
+                </Text>
                 <Caption style={{ marginTop: -5 }}>Posts</Caption>
               </View>
               <View style={{ alignItems: "center" }}>
@@ -223,7 +252,7 @@ const Profile = ({ navigation }, props) => {
               mode="contained"
               color="#84a59d"
               labelStyle={{ color: "white" }}
-              style={{ marginHorizontal: 10 ,}}
+              style={{ marginHorizontal: 10 }}
               onPress={() => {
                 navigation.navigate("EditProfile", {
                   user: user,
@@ -235,8 +264,12 @@ const Profile = ({ navigation }, props) => {
             </Button>
           </View>
         </View>
-        {user?.name && user?.name != "" && <Text style={styles.boldText}>{user?.name}</Text>}
-        {user?.bio && user?.bio != "" && <Caption style={styles.caption}>{user?.bio}</Caption>}
+        {user?.name && user?.name != "" && (
+          <Text style={styles.boldText}>{user?.name}</Text>
+        )}
+        {user?.bio && user?.bio != "" && (
+          <Caption style={styles.caption}>{user?.bio}</Caption>
+        )}
       </View>
 
       <Tab.Navigator

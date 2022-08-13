@@ -1,4 +1,4 @@
-import React,{useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { View, Alert, TouchableOpacity } from "react-native";
 import {
   Avatar,
@@ -10,13 +10,19 @@ import {
   ActivityIndicator,
   Caption,
   Menu,
-  Provider
+  Provider,
 } from "react-native-paper";
 import { Image } from "react-native-elements";
 import { Feather } from "@expo/vector-icons";
-import {toDateTime} from './reusableComponets'
-import { db, auth, fs} from "../../firebase";
-import {savePost,removeSavedPost,deletePost, likePost, unlikePost} from '../UserFunctions'
+import { toDateTime } from "./reusableComponets";
+import { db, auth, fs } from "../../firebase";
+import {
+  savePost,
+  removeSavedPost,
+  deletePost,
+  likePost,
+  unlikePost,
+} from "../UserFunctions";
 import dynamicStyles from "./styles";
 
 const PostCard = (props) => {
@@ -34,22 +40,23 @@ const PostCard = (props) => {
     navigation,
   } = props;
   const styles = dynamicStyles();
-  const [savedPost, setSavedPost] = useState(false)
-  const [isLiked, setLiked] = useState(false)
-  const [visible, setVisible] = useState(false)
-  const [totalLikes, setTotalLikes] = useState(0)
-const [menuAnchor, setMenuAnchor] = useState({ x: 0, y: 0 })
+  const [savedPost, setSavedPost] = useState(false);
+  const [isLiked, setLiked] = useState(false);
+  const [visible, setVisible] = useState(false);
+  const [totalLikes, setTotalLikes] = useState(0);
+  const [menuAnchor, setMenuAnchor] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
-    if(post.likes){
-      post.likes.includes(auth.currentUser.uid) ? setLiked(true) : setLiked(false)
+    if (post.likes) {
+      post.likes.includes(auth.currentUser.uid)
+        ? setLiked(true)
+        : setLiked(false);
     }
-    setTotalLikes(post.likes?.length)
+    setTotalLikes(post.likes?.length);
     if (savedPosts) {
       if (savedPosts.includes(post.id)) {
         setSavedPost(true);
-      }
-      else{
+      } else {
         setSavedPost(false);
       }
     }
@@ -63,65 +70,66 @@ const [menuAnchor, setMenuAnchor] = useState({ x: 0, y: 0 })
 
     setMenuAnchor(anchor);
     openMenu();
-  }
+  };
   const openMenu = () => {
     setVisible(true);
-  }
+  };
   const closeMenu = () => {
     setVisible(false);
-  }
+  };
   return (
-    <Card
-      style={[styles.cardContainer, styles.elevation]}
-    >
-     <Menu
-        visible={visible}
-        onDismiss={closeMenu}
-        anchor={menuAnchor}
-      >
-        <Menu.Item onPress={() => {
-           Alert.alert("Delete", "Are you sure to want to delete this post?", [
-            {
-              text: "No",
-              onPress: () => console.log("Cancel Pressed"),
-              style: "cancel",
-            },
-            {
-              text: "Yes",
-              onPress: () => {
-                deletePost(post.id);
+    <Card style={[styles.cardContainer, styles.elevation]}>
+      <Menu visible={visible} onDismiss={closeMenu} anchor={menuAnchor}>
+        <Menu.Item
+          onPress={() => {
+            Alert.alert("Delete", "Are you sure to want to delete this post?", [
+              {
+                text: "No",
+                onPress: () => console.log("Cancel Pressed"),
+                style: "cancel",
               },
-            },
-          ]);
-          setVisible(false);
-          
-        }} title="Delete" /> 
+              {
+                text: "Yes",
+                onPress: () => {
+                  deletePost(post.id);
+                },
+              },
+            ]);
+            setVisible(false);
+          }}
+          title="Delete"
+        />
       </Menu>
       <Card.Title
         style={styles.cardTitle}
         titleStyle={styles.cardTitleText}
-        title={userName} 
+        title={userName}
         left={(props) => (
           <TouchableOpacity
-          onPress={()=>{
-            auth.currentUser.uid == userId ? navigation.navigate("Profile") :
-              navigation.navigate("OtherProfile", {
-                  user: user,
-                });
-          }}
+            onPress={() => {
+              auth.currentUser.uid == userId
+                ? navigation.navigate("Profile")
+                : navigation.navigate("OtherProfile", {
+                    user: user,
+                  });
+            }}
           >
- <Avatar.Image
-            size={44}
-            style={styles.elevation}
-            source={userProfilePic ? {uri: userProfilePic} : require("../../assets/defaultProfilePic.png")}
-          />
+            <Avatar.Image
+              size={44}
+              style={styles.elevation}
+              source={
+                userProfilePic
+                  ? { uri: userProfilePic }
+                  : require("../../assets/defaultProfilePic.png")
+              }
+            />
           </TouchableOpacity>
-         
         )}
-        right={(props) => (
-          auth.currentUser.uid == userId && <IconButton {...props} icon="dots-vertical" onPress={onIconPress} />
-        )}
-       
+        right={(props) =>
+          auth.currentUser.uid == userId && (
+            <IconButton {...props} icon="dots-vertical" onPress={onIconPress} />
+          )
+        }
       />
       <View style={styles.cardView}>
         {url ? (
@@ -139,22 +147,19 @@ const [menuAnchor, setMenuAnchor] = useState({ x: 0, y: 0 })
         )}
       </View>
 
-      <Card.Actions
-        style={styles.cardActionContainer}
-      >
+      <Card.Actions style={styles.cardActionContainer}>
         <View style={{ flexDirection: "row" }}>
           <IconButton
             {...props}
-            icon={isLiked ? "heart" :"heart-outline"}
+            icon={isLiked ? "heart" : "heart-outline"}
             onPress={() => {
-            isLiked ? (
-              unlikePost(post.id),
-              totalLikes > 0 ? setTotalLikes(totalLikes - 1) : setTotalLikes(0)
-              ):(
-                likePost(post.id),
-                setTotalLikes(totalLikes + 1)
-                )
-            setLiked(!isLiked)
+              isLiked
+                ? (unlikePost(post.id),
+                  totalLikes > 0
+                    ? setTotalLikes(totalLikes - 1)
+                    : setTotalLikes(0))
+                : (likePost(post.id), setTotalLikes(totalLikes + 1));
+              setLiked(!isLiked);
             }}
             style={[styles.cardActionButton, styles.elevation]}
           />
@@ -173,16 +178,15 @@ const [menuAnchor, setMenuAnchor] = useState({ x: 0, y: 0 })
             onPress={() => {}}
             style={[styles.cardActionButton, styles.elevation]}
           /> */}
-          
         </View>
 
         <IconButton
           {...props}
-          icon= {savedPost ? "bookmark" :"bookmark-outline"}
+          icon={savedPost ? "bookmark" : "bookmark-outline"}
           onPress={() => {
-            savedPost ? (removeSavedPost(post.id)):(savePost(post.id))
-            setSavedPost(!savedPost)
-            }}
+            savedPost ? removeSavedPost(post.id) : savePost(post.id);
+            setSavedPost(!savedPost);
+          }}
           style={[styles.cardActionButton, styles.elevation]}
         />
       </Card.Actions>

@@ -5,13 +5,27 @@ import HomeScreen from "./HomeScreen";
 import UnderConstruction from "../reusable/UnderConstruction";
 const Tab = createMaterialTopTabNavigator();
 
-const Feed = ({navigation}) => {
+const Feed = ({ navigation }) => {
   const ChatScreen = () => {
-    return <UnderConstruction screenName="Direct Message" navigation={navigation} showHeader={true} backgroundColor="#F5FCFF"/>;
-};
-const StoryScreen = () => {
-return <UnderConstruction screenName="Upload Story" navigation={navigation} showHeader={true} backgroundColor="#fffafb"/>;
-};
+    return (
+      <UnderConstruction
+        screenName="Direct Message"
+        navigation={navigation}
+        showHeader={true}
+        backgroundColor="#F5FCFF"
+      />
+    );
+  };
+  const StoryScreen = () => {
+    return (
+      <UnderConstruction
+        screenName="Upload Story"
+        navigation={navigation}
+        showHeader={true}
+        backgroundColor="#fffafb"
+      />
+    );
+  };
   return (
     <View style={{ backgroundColor: "#fff", flex: 1 }}>
       {/* header complete */}

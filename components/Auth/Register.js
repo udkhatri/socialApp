@@ -1,7 +1,20 @@
 import React, { useEffect } from "react";
-import { StyleSheet, View, KeyboardAvoidingView, Image, Alert } from "react-native";
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import { Button, Text, TextInput, Snackbar, Banner, Colors } from "react-native-paper";
+import {
+  StyleSheet,
+  View,
+  KeyboardAvoidingView,
+  Image,
+  Alert,
+} from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import {
+  Button,
+  Text,
+  TextInput,
+  Snackbar,
+  Banner,
+  Colors,
+} from "react-native-paper";
 import { auth, db } from "../../firebase";
 import styles from "./styles";
 
@@ -17,27 +30,31 @@ export default function Signup({ navigation }) {
   const [visible, setVisible] = React.useState(false);
 
   const onSignUp = () => {
-    if( Name == "" || Email == "" || Password == ""){
+    if (Name == "" || Email == "" || Password == "") {
       setLabel("Please fill all the fields");
       setVisible(true);
-    }else{
+    } else {
       console.log("signup");
       auth
         .createUserWithEmailAndPassword(Email, Password)
         .then((result) => {
           auth.currentUser.sendEmailVerification();
-          console.log("New user is: ",auth.currentUser.uid);
-          db.collection("users").doc(auth.currentUser.uid).set({
-            name: Name,
-            email: Email,
-            id: auth.currentUser.uid,
-            profilePicUrl: null,
-            userName: ""
-          }).then(()=>{
-            console.log("Document successfully written!");
-          }).catch((error)=>{
-            console.log("Error writing document: ",error);
-          })
+          console.log("New user is: ", auth.currentUser.uid);
+          db.collection("users")
+            .doc(auth.currentUser.uid)
+            .set({
+              name: Name,
+              email: Email,
+              id: auth.currentUser.uid,
+              profilePicUrl: null,
+              userName: "",
+            })
+            .then(() => {
+              console.log("Document successfully written!");
+            })
+            .catch((error) => {
+              console.log("Error writing document: ", error);
+            });
         })
         .catch((error) => {
           console.log(error);
@@ -45,7 +62,6 @@ export default function Signup({ navigation }) {
           setVisible(true);
         });
     }
-    
   };
 
   const eyeColor = () => {
@@ -57,13 +73,11 @@ export default function Signup({ navigation }) {
   };
   return (
     <View style={{ backgroundColor: "#fff", flex: 1 }}>
-    
       <KeyboardAwareScrollView
-      resetScrollToCoords={{ x: 30, y: 0 }}
-      contentContainerStyle={styles.authContainer}
-      scrollEnabled={true}
-    >
-       
+        resetScrollToCoords={{ x: 30, y: 0 }}
+        contentContainerStyle={styles.authContainer}
+        scrollEnabled={true}
+      >
         <TextInput
           label="Name"
           value={Name}
@@ -114,28 +128,26 @@ export default function Signup({ navigation }) {
           already have an account? Login here
         </Button>
         <Banner
-        visible={visible}
-        actions={[
-          {
-            label: "Ok",
-            onPress: () => setVisible(false),
-          },
-        ]}
-        contentStyle={{
-          backgroundColor: Colors.red100,
-          borderRadius: 9,
-        }}
-        style={{
-          margin: 10,
-          borderRadius: 9,
-          marginBottom: 20,
-        }}
-      >
-        <Text style={{ fontSize: 15, color: "#000" }}>{label}</Text>
-      </Banner>
-    </KeyboardAwareScrollView>
-    
+          visible={visible}
+          actions={[
+            {
+              label: "Ok",
+              onPress: () => setVisible(false),
+            },
+          ]}
+          contentStyle={{
+            backgroundColor: Colors.red100,
+            borderRadius: 9,
+          }}
+          style={{
+            margin: 10,
+            borderRadius: 9,
+            marginBottom: 20,
+          }}
+        >
+          <Text style={{ fontSize: 15, color: "#000" }}>{label}</Text>
+        </Banner>
+      </KeyboardAwareScrollView>
     </View>
   );
 }
-

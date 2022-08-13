@@ -1,12 +1,11 @@
-import React, { useEffect,useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, Image, ImageBackground } from "react-native";
-import { Appbar} from "react-native-paper";
-import { Ionicons,Feather } from '@expo/vector-icons'; 
+import { Appbar } from "react-native-paper";
+import { Ionicons, Feather } from "@expo/vector-icons";
 import AllPosts from "./AllPosts";
-import {fetchAllPosts,fetchUser} from '../../components/UserFunctions'
+import { fetchAllPosts, fetchUser } from "../../components/UserFunctions";
 
 const HomeScreen = ({ navigation }) => {
-
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState({});
@@ -25,8 +24,7 @@ const HomeScreen = ({ navigation }) => {
       setPosts(posts);
       setLoading(false);
     });
-   
-  }
+  };
   return (
     <ImageBackground
       source={require("../../assets/backface.jpg")}
@@ -54,7 +52,13 @@ const HomeScreen = ({ navigation }) => {
             onPress={() => navigation.navigate("ChatScreen")}
           /> */}
         </Appbar.Header>
-        <AllPosts navigation={navigation} posts={posts} fetchPosts={fetchPosts} user={user} loading={loading}/>
+        <AllPosts
+          navigation={navigation}
+          posts={posts}
+          fetchPosts={fetchPosts}
+          user={user}
+          loading={loading}
+        />
       </View>
     </ImageBackground>
   );

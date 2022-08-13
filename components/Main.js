@@ -24,32 +24,31 @@ const Main = () => {
     <Tab.Navigator
       shifting={true}
       initialRouteName="Home"
-      
       screenOptions={({ route }) => ({
         tabBarShowLabel: false,
-        tabBarStyle:{
-        position: "absolute",
+        tabBarStyle: {
+          position: "absolute",
           bottom: 20,
           left: 20,
           right: 20,
           elevation: 2,
-          shadowColor: '#171717',
-          shadowOffset: {width: -2, height: 4},
+          shadowColor: "#171717",
+          shadowOffset: { width: -2, height: 4 },
           shadowOpacity: 0.2,
           shadowRadius: 3,
           backgroundColor: "#fff",
           paddingBottom: -8,
           height: 70,
           borderRadius: 15,
-      },
-      headerShown: false,
+        },
+        headerShown: false,
         tabBarIcon: ({ focused, color, size, el, activeColor }) => {
           let iconName;
           //let size;
           if (route.name === "Home") {
             iconName = focused ? "home" : "ios-home-outline";
             size = focused ? 30 : 28;
-            color =  "#a2d2ff";
+            color = "#a2d2ff";
           } else if (route.name === "Profile") {
             iconName = focused ? "ios-person" : "ios-person-outline";
             size = focused ? 30 : 28;
@@ -57,7 +56,7 @@ const Main = () => {
           } else if (route.name === "Notification") {
             iconName = focused ? "heart-sharp" : "heart-outline";
             size = focused ? 32 : 30;
-            color =  "#ffb5a7";
+            color = "#ffb5a7";
           } else if (route.name === "Search") {
             iconName = focused ? "md-search" : "md-search-outline";
             size = focused ? 30 : 28;
@@ -84,7 +83,6 @@ const Main = () => {
           );
         },
       })}
-      
     >
       <Tab.Screen
         name="Home"
@@ -111,7 +109,7 @@ const Main = () => {
               resizeMode="contain"
               style={{ height: 120, width: 120 }}
             />
-          )
+          ),
         }}
       />
       <Tab.Screen name="Notification" component={notifiationScreen} />
