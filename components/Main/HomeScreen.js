@@ -41,18 +41,18 @@ const HomeScreen = ({ navigation }) => {
             elevation: 0,
           }}
         >
-          <Appbar.Action
+          {/* <Appbar.Action
             icon={()=>{ return <Feather name="camera" size={24} color="black" />}}
             onPress={() => navigation.navigate("StoryScreen")}
-          />
+          /> */}
           <Image
             source={require("../../assets/headTitle.png")}
             style={{ height: 25, width: 160 }}
           />
-          <Appbar.Action
+          {/* <Appbar.Action
             icon={() =>{ return <Ionicons name="ios-chatbox-ellipses-outline" size={24} color="black" />}}
             onPress={() => navigation.navigate("ChatScreen")}
-          />
+          /> */}
         </Appbar.Header>
         <AllPosts navigation={navigation} posts={posts} fetchPosts={fetchPosts} user={user} loading={loading}/>
       </View>

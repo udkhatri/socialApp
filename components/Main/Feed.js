@@ -16,9 +16,9 @@ return <UnderConstruction screenName="Upload Story" navigation={navigation} show
     <View style={{ backgroundColor: "#fff", flex: 1 }}>
       {/* header complete */}
       <Tab.Navigator tabBar={() => {}} initialRouteName="HomeScreen">
-        <Tab.Screen name="StoryScreen" component={StoryScreen} />
+        {/* <Tab.Screen name="StoryScreen" component={StoryScreen} /> */}
         <Tab.Screen name="HomeScreen" component={HomeScreen} />
-        <Tab.Screen name="ChatScreen" component={ChatScreen} />
+        {/* <Tab.Screen name="ChatScreen" component={ChatScreen} /> */}
       </Tab.Navigator>
     </View>
   );

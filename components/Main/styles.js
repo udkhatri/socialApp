@@ -4,6 +4,35 @@ import {
   Colors,
 } from "react-native-paper";
 const styles = StyleSheet.create({
+  Camcontainer: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "white",
+  },
+  containerImg: {
+    flex: 1,
+  },
+  preview: {
+    flex: 1,
+    justifyContent: "flex-end",
+    alignItems: "center",
+    aspectRatio: 3 / 4,
+  },
+  button1: {
+    alignSelf: "center",
+    alignContent: "center",
+    justifyContent: "center",
+    marginVertical: 20,
+  },
+  flipcamera: {},
+  buttonContainer: {
+    padding: 13,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
     container:{
         flex:1,
         backgroundColor: '#fff',

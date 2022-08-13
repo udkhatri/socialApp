@@ -6,7 +6,7 @@ import { Camera } from "expo-camera";
 import { Button, IconButton } from "react-native-paper";
 import * as ImagePicker from "expo-image-picker";
 import { MaterialIcons, FontAwesome, AntDesign } from "@expo/vector-icons";
-
+import styles from "./styles";
 export default function Add({ navigation }) {
   const [hasCameraPermission, setHasCameraPermission] = useState(null);
   const [hasGalleryPermission, setHasGalleryPermission] = useState(null);
@@ -106,7 +106,7 @@ export default function Add({ navigation }) {
             name="circle-o"
             color={"#3a3a3a"}
             size={80}
-            style={styles.button}
+            style={styles.button1}
           />
         </TouchableOpacity>
       ) : (
@@ -119,7 +119,7 @@ export default function Add({ navigation }) {
             name="checkcircle"
             color={"#000"}
             size={65}
-            style={styles.button}
+            style={styles.button1}
           />
         </TouchableOpacity>
       )}
@@ -158,39 +158,3 @@ export default function Add({ navigation }) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  Camcontainer: {
-    flex: 1,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "white",
-  },
-  container: {
-    flex: 1,
-  },
-  containerImg: {
-    flex: 1,
-  },
-  preview: {
-    flex: 1,
-    justifyContent: "flex-end",
-    alignItems: "center",
-    aspectRatio: 3 / 4,
-  },
-  button: {
-    alignSelf: "center",
-    alignContent: "center",
-    justifyContent: "center",
-    marginVertical: 20,
-  },
-
-  flipcamera: {},
-  buttonContainer: {
-    padding: 13,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-});
