@@ -2,12 +2,13 @@ import React, { useEffect } from "react";
 import { View, Text, FlatList, RefreshControl } from "react-native";
 import PostCard from "../reusable/PostCard";
 const AllPosts = (props) => {
-  const { navigation, posts, fetchPosts, loading, user } = props;
+  const { navigation, posts, fetchPosts, loading, user, header } = props;
   return (
     <View>
       <FlatList
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
+        ListHeaderComponent={header && header}
         refreshControl={
           <RefreshControl refreshing={loading} onRefresh={() => fetchPosts()} />
         }

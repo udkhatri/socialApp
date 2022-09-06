@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 import { useWindowDimensions } from "react-native";
-
+import { Colors } from "react-native-paper";
 export const iosShadow = {};
 export const androidShadow = {
   elevation: 5,
@@ -80,6 +80,27 @@ const dynamicStyles = () => {
       color: "grey",
       textAlign: "center",
       paddingHorizontal: 10,
+    },
+    storyAvatarBG: {
+      height: 70,
+      width: 70,
+      borderRadius: 50,
+      marginHorizontal: 5,
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    storyAvatar: {
+      height: 65,
+      width: 65,
+      borderRadius: 50,
+    },
+    storyPlusIcon: {
+      position: "absolute",
+      bottom: -5,
+      borderColor: "white",
+      borderWidth: 1.5,
+      right: 0,
+      backgroundColor: Colors.blueA400,
     },
   });
 };
