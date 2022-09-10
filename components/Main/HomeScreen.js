@@ -84,7 +84,7 @@ const HomeScreen = ({ navigation }) => {
     },
   ];
   return (
-    <View style={{ flex: 1, backgroundColor: Colors.grey300 }}>
+    <View style={{ flex: 1, backgroundColor: Colors.grey200 }}>
       <Appbar.Header
         style={{
           backgroundColor: "#fff0",

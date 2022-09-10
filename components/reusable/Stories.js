@@ -57,7 +57,6 @@ const Stories = (props) => {
             icon="plus"
           />
         </TouchableOpacity>
-
         <Text
           style={{
             marginTop: 5,

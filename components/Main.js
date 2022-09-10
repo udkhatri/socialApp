@@ -13,6 +13,7 @@ import {
   createStackNavigator,
 } from "@react-navigation/bottom-tabs";
 import { Ionicons, AntDesign } from "@expo/vector-icons";
+import { Colors } from "react-native-paper";
 
 const Tab = createBottomTabNavigator();
 const EmptyScreen = () => {
@@ -36,10 +37,10 @@ const Main = () => {
           shadowOffset: { width: -2, height: 4 },
           shadowOpacity: 0.2,
           shadowRadius: 3,
-          backgroundColor: "#fff",
+          backgroundColor: Colors.white,
           paddingBottom: -8,
           height: 70,
-          borderRadius: 15,
+          borderRadius: 35,
         },
         headerShown: false,
         tabBarIcon: ({ focused, color, size, el, activeColor }) => {
@@ -101,8 +102,6 @@ const Main = () => {
           },
         })}
         options={{
-          tabBarLabel: "Profile",
-
           tabBarIcon: () => (
             <Image
               source={require("../assets/plus3Dg.png")}
