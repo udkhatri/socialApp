@@ -18,6 +18,10 @@
 ### :camera: Demo video of the application
 <div align="center"> 
 
+
+https://user-images.githubusercontent.com/34532828/189505007-884e062b-263b-45c7-b820-75a7fb6270ab.mp4
+
+
 </div>
 
 
